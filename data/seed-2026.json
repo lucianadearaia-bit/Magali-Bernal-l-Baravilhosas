@@ -1,0 +1,1362 @@
+{
+ "version": 1,
+ "source": "tabela baraho 26.xlsx (pontos por jogo; totais recalculados)",
+ "persons": [
+  {
+   "id": "adriana-m-r",
+   "name": "Adriana M. R.",
+   "type": "membro"
+  },
+  {
+   "id": "adriana-s",
+   "name": "Adriana S.",
+   "type": "membro"
+  },
+  {
+   "id": "ana-dayse",
+   "name": "Ana Dayse",
+   "type": "membro"
+  },
+  {
+   "id": "ana-luiza",
+   "name": "Ana Luiza",
+   "type": "membro"
+  },
+  {
+   "id": "angela",
+   "name": "Angela",
+   "type": "membro"
+  },
+  {
+   "id": "cris-k",
+   "name": "Cris K",
+   "type": "membro"
+  },
+  {
+   "id": "helena",
+   "name": "Helena",
+   "type": "membro"
+  },
+  {
+   "id": "larissa",
+   "name": "Larissa",
+   "type": "membro"
+  },
+  {
+   "id": "lorena",
+   "name": "Lorena",
+   "type": "membro"
+  },
+  {
+   "id": "magali",
+   "name": "Magali",
+   "type": "membro"
+  },
+  {
+   "id": "mari",
+   "name": "Mari",
+   "type": "membro"
+  },
+  {
+   "id": "maria-helena",
+   "name": "Maria Helena",
+   "type": "membro"
+  },
+  {
+   "id": "marisa",
+   "name": "Marisa",
+   "type": "membro"
+  },
+  {
+   "id": "miriam",
+   "name": "Miriam",
+   "type": "membro"
+  },
+  {
+   "id": "nelise",
+   "name": "Nelise",
+   "type": "membro"
+  },
+  {
+   "id": "pati",
+   "name": "Pati",
+   "type": "membro"
+  },
+  {
+   "id": "priscila",
+   "name": "Priscila",
+   "type": "membro"
+  },
+  {
+   "id": "renata",
+   "name": "Renata",
+   "type": "membro"
+  },
+  {
+   "id": "sabine",
+   "name": "Sabine",
+   "type": "membro"
+  },
+  {
+   "id": "simone",
+   "name": "Simone",
+   "type": "membro"
+  },
+  {
+   "id": "vania",
+   "name": "Vania",
+   "type": "membro"
+  },
+  {
+   "id": "manoela",
+   "name": "Manoela",
+   "type": "convidada"
+  },
+  {
+   "id": "ana-a",
+   "name": "Ana A",
+   "type": "convidada"
+  },
+  {
+   "id": "kelly",
+   "name": "Kelly",
+   "type": "convidada"
+  },
+  {
+   "id": "lu-camargo",
+   "name": "Lu Camargo",
+   "type": "convidada"
+  },
+  {
+   "id": "monica",
+   "name": "Monica",
+   "type": "convidada"
+  },
+  {
+   "id": "neide",
+   "name": "Neide",
+   "type": "convidada"
+  },
+  {
+   "id": "lucinha",
+   "name": "Lucinha",
+   "type": "convidada"
+  },
+  {
+   "id": "claudia",
+   "name": "Claudia",
+   "type": "convidada"
+  }
+ ],
+ "season": {
+  "year": 2026,
+  "status": "ativa",
+  "members": [
+   "adriana-m-r",
+   "adriana-s",
+   "ana-dayse",
+   "ana-luiza",
+   "angela",
+   "cris-k",
+   "helena",
+   "larissa",
+   "lorena",
+   "magali",
+   "mari",
+   "maria-helena",
+   "marisa",
+   "miriam",
+   "nelise",
+   "pati",
+   "priscila",
+   "renata",
+   "sabine",
+   "simone",
+   "vania"
+  ],
+  "scoreTable": [
+   {
+    "min": 0,
+    "max": 100,
+    "win": 10,
+    "lose": 10
+   },
+   {
+    "min": 110,
+    "max": 300,
+    "win": 11,
+    "lose": 9
+   },
+   {
+    "min": 310,
+    "max": 500,
+    "win": 12,
+    "lose": 8
+   },
+   {
+    "min": 510,
+    "max": 800,
+    "win": 13,
+    "lose": 7
+   },
+   {
+    "min": 810,
+    "max": 1000,
+    "win": 14,
+    "lose": 6
+   },
+   {
+    "min": 1010,
+    "max": 1300,
+    "win": 15,
+    "lose": 5
+   },
+   {
+    "min": 1310,
+    "max": 1500,
+    "win": 16,
+    "lose": 4
+   },
+   {
+    "min": 1510,
+    "max": 1800,
+    "win": 17,
+    "lose": 3
+   },
+   {
+    "min": 1810,
+    "max": 2000,
+    "win": 18,
+    "lose": 2
+   },
+   {
+    "min": 2010,
+    "max": 2300,
+    "win": 19,
+    "lose": 1
+   },
+   {
+    "min": 2310,
+    "max": 2500,
+    "win": 20,
+    "lose": 0
+   },
+   {
+    "min": 2510,
+    "max": 2800,
+    "win": 21,
+    "lose": -1
+   },
+   {
+    "min": 2810,
+    "max": null,
+    "win": 22,
+    "lose": -2
+   }
+  ]
+ },
+ "events": [
+  {
+   "id": "2026-02-26",
+   "date": "2026-02-26",
+   "hosts": "Mirian e Ana",
+   "location": "",
+   "guests": [
+    "manoela",
+    "ana-a"
+   ],
+   "scores": {
+    "adriana-m-r": [
+     3,
+     7,
+     4,
+     null
+    ],
+    "ana-dayse": [
+     17,
+     12,
+     5,
+     null
+    ],
+    "ana-luiza": [
+     3,
+     8,
+     15,
+     null
+    ],
+    "angela": [
+     3,
+     12,
+     2,
+     null
+    ],
+    "larissa": [
+     -2,
+     22,
+     16,
+     null
+    ],
+    "lorena": [
+     7,
+     22,
+     5,
+     null
+    ],
+    "magali": [
+     13,
+     13,
+     16,
+     null
+    ],
+    "mari": [
+     13,
+     12,
+     18,
+     null
+    ],
+    "maria-helena": [
+     22,
+     12,
+     16,
+     null
+    ],
+    "marisa": [
+     7,
+     -2,
+     15,
+     null
+    ],
+    "miriam": [
+     3,
+     8,
+     16,
+     null
+    ],
+    "nelise": [
+     13,
+     13,
+     5,
+     null
+    ],
+    "pati": [
+     17,
+     13,
+     18,
+     null
+    ],
+    "priscila": [
+     7,
+     8,
+     4,
+     null
+    ],
+    "renata": [
+     22,
+     7,
+     4,
+     null
+    ],
+    "sabine": [
+     17,
+     7,
+     15,
+     null
+    ],
+    "simone": [
+     13,
+     -2,
+     2,
+     null
+    ],
+    "vania": [
+     2,
+     7,
+     5,
+     null
+    ],
+    "manoela": [
+     7,
+     8,
+     15,
+     null
+    ],
+    "ana-a": [
+     null,
+     13,
+     4,
+     null
+    ]
+   },
+   "sumulas": [],
+   "status": "realizado"
+  },
+  {
+   "id": "2026-03-19",
+   "date": "2026-03-19",
+   "hosts": "Angela e Adri",
+   "location": "Petit Carneiro, 979",
+   "guests": [],
+   "scores": {
+    "adriana-m-r": [
+     8,
+     19,
+     9,
+     null
+    ],
+    "adriana-s": [
+     8,
+     6,
+     13,
+     null
+    ],
+    "ana-dayse": [
+     12,
+     14,
+     9,
+     null
+    ],
+    "angela": [
+     4,
+     6,
+     -1,
+     null
+    ],
+    "helena": [
+     16,
+     7,
+     21,
+     null
+    ],
+    "lorena": [
+     16,
+     -2,
+     21,
+     null
+    ],
+    "magali": [
+     4,
+     1,
+     6,
+     null
+    ],
+    "marisa": [
+     12,
+     -2,
+     7,
+     null
+    ],
+    "miriam": [
+     8,
+     14,
+     11,
+     null
+    ],
+    "nelise": [
+     12,
+     1,
+     6,
+     null
+    ],
+    "pati": [
+     8,
+     13,
+     14,
+     null
+    ],
+    "priscila": [
+     16,
+     19,
+     -1,
+     null
+    ],
+    "renata": [
+     4,
+     13,
+     14,
+     null
+    ],
+    "sabine": [
+     12,
+     22,
+     7,
+     null
+    ],
+    "simone": [
+     4,
+     22,
+     11,
+     null
+    ],
+    "vania": [
+     16,
+     7,
+     13,
+     null
+    ]
+   },
+   "sumulas": [],
+   "status": "realizado"
+  },
+  {
+   "id": "2026-04-23",
+   "date": "2026-04-23",
+   "hosts": "Sabine e Maga",
+   "location": "Casa da Sabine",
+   "guests": [
+    "kelly"
+   ],
+   "scores": {
+    "adriana-m-r": [
+     15,
+     13,
+     10,
+     null
+    ],
+    "adriana-s": [
+     15,
+     4,
+     5,
+     null
+    ],
+    "ana-dayse": [
+     9,
+     -2,
+     11,
+     null
+    ],
+    "ana-luiza": [
+     9,
+     13,
+     10,
+     null
+    ],
+    "cris-k": [
+     8,
+     4,
+     2,
+     null
+    ],
+    "helena": [
+     14,
+     16,
+     10,
+     null
+    ],
+    "larissa": [
+     11,
+     13,
+     18,
+     null
+    ],
+    "lorena": [
+     12,
+     7,
+     9,
+     null
+    ],
+    "magali": [
+     0,
+     22,
+     15,
+     null
+    ],
+    "mari": [
+     6,
+     22,
+     15,
+     null
+    ],
+    "maria-helena": [
+     6,
+     -2,
+     9,
+     null
+    ],
+    "marisa": [
+     11,
+     22,
+     10,
+     null
+    ],
+    "miriam": [
+     20,
+     16,
+     18,
+     null
+    ],
+    "nelise": [
+     0,
+     22,
+     2,
+     null
+    ],
+    "pati": [
+     12,
+     7,
+     2,
+     null
+    ],
+    "priscila": [
+     20,
+     7,
+     18,
+     null
+    ],
+    "sabine": [
+     8,
+     13,
+     2,
+     null
+    ],
+    "simone": [
+     5,
+     -2,
+     11,
+     null
+    ],
+    "vania": [
+     5,
+     -2,
+     5,
+     null
+    ],
+    "kelly": [
+     14,
+     21,
+     18,
+     null
+    ]
+   },
+   "sumulas": [],
+   "status": "realizado"
+  },
+  {
+   "id": "2026-05-21",
+   "date": "2026-05-21",
+   "hosts": "Vania e Marisa",
+   "location": "",
+   "guests": [],
+   "scores": {
+    "adriana-s": [
+     10,
+     8,
+     0,
+     null
+    ],
+    "ana-dayse": [
+     15,
+     8,
+     20,
+     null
+    ],
+    "ana-luiza": [
+     7,
+     12,
+     3,
+     null
+    ],
+    "helena": [
+     13,
+     10,
+     22,
+     null
+    ],
+    "larissa": [
+     10,
+     12,
+     0,
+     null
+    ],
+    "magali": [
+     5,
+     13,
+     3,
+     null
+    ],
+    "mari": [
+     10,
+     11,
+     17,
+     null
+    ],
+    "marisa": [
+     17,
+     7,
+     4,
+     null
+    ],
+    "miriam": [
+     13,
+     7,
+     16,
+     null
+    ],
+    "nelise": [
+     7,
+     10,
+     -2,
+     null
+    ],
+    "pati": [
+     5,
+     9,
+     -2,
+     null
+    ],
+    "priscila": [
+     17,
+     13,
+     4,
+     null
+    ],
+    "renata": [
+     3,
+     11,
+     16,
+     null
+    ],
+    "sabine": [
+     10,
+     10,
+     20,
+     null
+    ],
+    "simone": [
+     3,
+     10,
+     22,
+     null
+    ],
+    "vania": [
+     15,
+     9,
+     17,
+     null
+    ]
+   },
+   "sumulas": [],
+   "status": "realizado"
+  },
+  {
+   "id": "2026-06-18",
+   "date": "2026-06-18",
+   "hosts": "Lorena e Helena",
+   "location": "",
+   "guests": [
+    "kelly",
+    "lu-camargo",
+    "monica"
+   ],
+   "scores": {
+    "adriana-s": [
+     8,
+     -2,
+     6,
+     null
+    ],
+    "ana-dayse": [
+     5,
+     22,
+     6,
+     null
+    ],
+    "angela": [
+     8,
+     -2,
+     15,
+     null
+    ],
+    "helena": [
+     10,
+     22,
+     19,
+     null
+    ],
+    "larissa": [
+     0,
+     2,
+     15,
+     null
+    ],
+    "lorena": [
+     15,
+     18,
+     5,
+     null
+    ],
+    "magali": [
+     10,
+     7,
+     14,
+     null
+    ],
+    "mari": [
+     13,
+     -2,
+     14,
+     null
+    ],
+    "maria-helena": [
+     13,
+     13,
+     4,
+     null
+    ],
+    "marisa": [
+     10,
+     15,
+     4,
+     null
+    ],
+    "nelise": [
+     12,
+     5,
+     1,
+     null
+    ],
+    "pati": [
+     7,
+     13,
+     16,
+     null
+    ],
+    "priscila": [
+     13,
+     22,
+     19,
+     null
+    ],
+    "renata": [
+     5,
+     15,
+     1,
+     null
+    ],
+    "sabine": [
+     12,
+     22,
+     16,
+     null
+    ],
+    "simone": [
+     20,
+     -2,
+     4,
+     null
+    ],
+    "vania": [
+     0,
+     5,
+     5,
+     null
+    ],
+    "kelly": [
+     7,
+     18,
+     16,
+     null
+    ],
+    "lu-camargo": [
+     20,
+     7,
+     4,
+     null
+    ],
+    "monica": [
+     10,
+     2,
+     16,
+     null
+    ]
+   },
+   "sumulas": [],
+   "status": "realizado"
+  },
+  {
+   "id": "2026-07-23",
+   "date": "2026-07-23",
+   "hosts": "Dayse e Cris",
+   "location": "",
+   "guests": [
+    "neide",
+    "monica"
+   ],
+   "scores": {
+    "adriana-m-r": [
+     4,
+     0,
+     11,
+     null
+    ],
+    "adriana-s": [
+     13,
+     0,
+     -1,
+     null
+    ],
+    "ana-dayse": [
+     7,
+     12,
+     21,
+     null
+    ],
+    "ana-luiza": [
+     1,
+     14,
+     -1,
+     null
+    ],
+    "angela": [
+     4,
+     20,
+     21,
+     null
+    ],
+    "cris-k": [
+     16,
+     6,
+     7,
+     null
+    ],
+    "larissa": [
+     10,
+     13,
+     7,
+     null
+    ],
+    "lorena": [
+     8,
+     14,
+     21,
+     null
+    ],
+    "magali": [
+     12,
+     8,
+     -1,
+     null
+    ],
+    "mari": [
+     19,
+     6,
+     9,
+     null
+    ],
+    "marisa": [
+     10,
+     0,
+     -1,
+     null
+    ],
+    "miriam": [
+     19,
+     13,
+     13,
+     null
+    ],
+    "nelise": [
+     13,
+     20,
+     9,
+     null
+    ],
+    "pati": [
+     10,
+     7,
+     21,
+     null
+    ],
+    "priscila": [
+     10,
+     8,
+     9,
+     null
+    ],
+    "renata": [
+     16,
+     20,
+     11,
+     null
+    ],
+    "sabine": [
+     1,
+     20,
+     9,
+     null
+    ],
+    "vania": [
+     7,
+     7,
+     13,
+     null
+    ],
+    "neide": [
+     8,
+     12,
+     11,
+     null
+    ],
+    "monica": [
+     12,
+     0,
+     11,
+     null
+    ]
+   },
+   "sumulas": [],
+   "status": "realizado"
+  },
+  {
+   "id": "2026-08-20",
+   "date": "2026-08-20",
+   "hosts": "Pati e Mari",
+   "location": "",
+   "guests": [
+    "kelly",
+    "monica",
+    "lucinha"
+   ],
+   "scores": {
+    "adriana-m-r": [
+     22,
+     5,
+     15,
+     null
+    ],
+    "adriana-s": [
+     8,
+     15,
+     2,
+     null
+    ],
+    "ana-dayse": [
+     15,
+     15,
+     18,
+     null
+    ],
+    "angela": [
+     12,
+     5,
+     1,
+     null
+    ],
+    "helena": [
+     22,
+     4,
+     9,
+     null
+    ],
+    "larissa": [
+     -2,
+     8,
+     11,
+     null
+    ],
+    "magali": [
+     5,
+     9,
+     15,
+     null
+    ],
+    "mari": [
+     -2,
+     12,
+     18,
+     null
+    ],
+    "maria-helena": [
+     8,
+     4,
+     1,
+     null
+    ],
+    "marisa": [
+     22,
+     11,
+     5,
+     null
+    ],
+    "miriam": [
+     19,
+     9,
+     7,
+     null
+    ],
+    "nelise": [
+     15,
+     5,
+     9,
+     null
+    ],
+    "pati": [
+     1,
+     8,
+     5,
+     null
+    ],
+    "priscila": [
+     19,
+     16,
+     13,
+     null
+    ],
+    "renata": [
+     22,
+     16,
+     19,
+     null
+    ],
+    "sabine": [
+     5,
+     12,
+     13,
+     null
+    ],
+    "vania": [
+     -2,
+     5,
+     19,
+     null
+    ],
+    "kelly": [
+     1,
+     15,
+     11,
+     null
+    ],
+    "monica": [
+     -2,
+     11,
+     7,
+     null
+    ],
+    "lucinha": [
+     null,
+     15,
+     2,
+     null
+    ]
+   },
+   "sumulas": [],
+   "status": "realizado"
+  },
+  {
+   "id": "2026-09-17",
+   "date": "2026-09-17",
+   "hosts": "Renata e Nelise",
+   "location": "",
+   "guests": [],
+   "scores": {
+    "adriana-m-r": [
+     12,
+     10,
+     4,
+     null
+    ],
+    "adriana-s": [
+     19,
+     10,
+     9,
+     null
+    ],
+    "ana-dayse": [
+     1,
+     11,
+     9,
+     null
+    ],
+    "helena": [
+     10,
+     8,
+     7,
+     null
+    ],
+    "lorena": [
+     8,
+     10,
+     11,
+     null
+    ],
+    "magali": [
+     1,
+     9,
+     10,
+     null
+    ],
+    "mari": [
+     10,
+     9,
+     13,
+     null
+    ],
+    "maria-helena": [
+     8,
+     10,
+     10,
+     null
+    ],
+    "miriam": [
+     19,
+     10,
+     16,
+     null
+    ],
+    "nelise": [
+     12,
+     11,
+     4,
+     null
+    ],
+    "pati": [
+     15,
+     12,
+     11,
+     null
+    ],
+    "priscila": [
+     5,
+     12,
+     13,
+     null
+    ],
+    "renata": [
+     10,
+     10,
+     10,
+     null
+    ],
+    "sabine": [
+     5,
+     10,
+     7,
+     null
+    ],
+    "simone": [
+     10,
+     8,
+     16,
+     null
+    ],
+    "vania": [
+     15,
+     10,
+     10,
+     null
+    ]
+   },
+   "sumulas": [],
+   "status": "realizado"
+  },
+  {
+   "id": "2026-10-22",
+   "date": "2026-10-22",
+   "hosts": "Adri e Larissa",
+   "location": "",
+   "guests": [
+    "kelly",
+    "claudia"
+   ],
+   "scores": {
+    "adriana-s": [
+     17,
+     4,
+     22,
+     null
+    ],
+    "ana-dayse": [
+     3,
+     20,
+     -2,
+     null
+    ],
+    "ana-luiza": [
+     -2,
+     14,
+     15,
+     null
+    ],
+    "angela": [
+     7,
+     16,
+     14,
+     null
+    ],
+    "helena": [
+     15,
+     0,
+     15,
+     null
+    ],
+    "larissa": [
+     -2,
+     0,
+     14,
+     null
+    ],
+    "mari": [
+     3,
+     7,
+     6,
+     null
+    ],
+    "marisa": [
+     5,
+     4,
+     -2,
+     null
+    ],
+    "miriam": [
+     15,
+     16,
+     22,
+     null
+    ],
+    "priscila": [
+     7,
+     6,
+     -2,
+     null
+    ],
+    "renata": [
+     5,
+     14,
+     22,
+     null
+    ],
+    "sabine": [
+     22,
+     13,
+     6,
+     null
+    ],
+    "simone": [
+     13,
+     6,
+     5,
+     null
+    ],
+    "vania": [
+     13,
+     7,
+     5,
+     null
+    ],
+    "kelly": [
+     17,
+     20,
+     -2,
+     null
+    ],
+    "claudia": [
+     22,
+     13,
+     22,
+     null
+    ]
+   },
+   "sumulas": [],
+   "status": "realizado"
+  }
+ ]
+}

@@ -1,0 +1,1045 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1f2b22">
+<title>Baravilhosas · Ranking de Tranca</title>
+<link rel="icon" href="assets/img/logo.webp">
+<style>
+:root{
+  --green:#1f2b22; --green-2:#2a3a2e; --red:#b3123a; --red-dark:#8c0e2d;
+  --cream:#f3ead3; --cream-2:#fbf6ea; --ink:#2b2420; --muted:#6f655b;
+  --pink:#e9a0a8; --mint:#a8d5b5; --radius:14px;
+}
+*{box-sizing:border-box}
+html{font-size:17px;-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100vh;font-family:system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.45;color:var(--ink);background-color:var(--green)}
+a{color:var(--red-dark)}
+img{max-width:100%}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.demo{background:#f6d365;color:#3a2a00;text-align:center;padding:.4rem .75rem;font-size:.85rem}
+.top{position:sticky;top:0;z-index:10;background:rgba(18,27,21,.94);backdrop-filter:blur(6px);border-bottom:1px solid rgba(243,234,211,.15)}
+.top-inner{max-width:980px;margin:auto;padding:.45rem 1rem;display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"brand nav right";align-items:center;gap:.4rem 1rem}
+.brand{grid-area:brand;display:flex}
+.brand img{width:52px;height:52px;display:block}
+.tabs{grid-area:nav;display:flex;gap:.25rem;overflow-x:auto;scrollbar-width:none}
+.tabs a{color:var(--cream);text-decoration:none;padding:.5rem .95rem;border-radius:999px;min-height:44px;display:inline-flex;align-items:center;white-space:nowrap;font-weight:600}
+.tabs a.active{background:var(--red)}
+.tabs a:focus-visible,.btn:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
+.top-right{grid-area:right;display:flex;gap:.5rem;align-items:center}
+.top-right select{width:auto;min-width:5.5rem;background:var(--green-2);color:var(--cream);border-color:rgba(243,234,211,.35)}
+
+main{max-width:980px;margin:auto;padding:1rem}
+.card{position:relative;background:var(--cream);border-radius:var(--radius);box-shadow:0 8px 22px rgba(0,0,0,.38);padding:1.1rem 1.2rem;margin-bottom:1.1rem}
+.card::before{content:attr(data-suit);position:absolute;top:.55rem;right:.8rem;color:var(--red);opacity:.5;font-size:1.3rem;line-height:1}
+.card h1,.card h2{margin:0 0 .35rem;color:var(--red-dark);line-height:1.2}
+.card h1{font-size:1.5rem}
+.card h2{font-size:1.2rem}
+.sub{margin:0 0 .75rem;color:var(--muted)}
+.hint{color:var(--muted);font-size:.9rem;margin:.3rem 0 .8rem}
+.muted{color:var(--muted)}
+.empty{color:var(--muted);font-style:italic}
+.back{display:inline-block;margin-bottom:.4rem;text-decoration:none;font-weight:600}
+
+.toolbar{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;justify-content:space-between;margin:.4rem 0 .9rem}
+.actions{display:flex;flex-wrap:wrap;gap:.5rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;min-height:44px;padding:.5rem 1rem;border-radius:10px;border:2px solid var(--red);background:var(--red);color:#fff;font:inherit;font-weight:700;cursor:pointer;text-decoration:none;white-space:nowrap}
+.btn:hover{background:var(--red-dark);border-color:var(--red-dark)}
+.btn.secondary{background:transparent;color:var(--red-dark);border-color:var(--red-dark)}
+.btn.secondary:hover{background:rgba(179,18,58,.08)}
+.btn.ghost{background:transparent;color:var(--cream);border:1px solid rgba(243,234,211,.4)}
+.btn.danger{background:transparent;color:#a10f0f;border-color:#a10f0f}
+.btn.sm{min-height:38px;padding:.3rem .7rem;font-size:.9rem}
+.btn.full{width:100%}
+.btn[disabled]{opacity:.6;cursor:wait}
+
+.seg{display:inline-flex;background:rgba(43,36,32,.08);border-radius:12px;padding:3px;flex-wrap:wrap}
+.seg button{display:inline-flex;align-items:center;gap:.35rem;min-height:40px;padding:.35rem .8rem;border:0;border-radius:9px;background:transparent;font:inherit;font-weight:600;color:var(--ink);cursor:pointer}
+.seg button.on{background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.18);color:var(--red-dark)}
+
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -.3rem}
+table.rank{width:100%;border-collapse:collapse}
+.rank th,.rank td{padding:.55rem .45rem;text-align:left;border-bottom:1px solid rgba(43,36,32,.13);vertical-align:middle}
+.rank th{font-size:.82rem;text-transform:uppercase;letter-spacing:.03em;color:var(--muted)}
+.rank .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.rank .pts{font-size:1.2rem;font-weight:800}
+.rank tbody tr:hover{background:rgba(255,255,255,.45)}
+.pos{display:inline-grid;place-items:center;width:2.1rem;height:2.1rem;border-radius:50%;font-weight:800;background:rgba(43,36,32,.08)}
+.pos.p1{background:#d9b23b;color:#3a2a00}
+.pos.p2{background:#c4c4c4;color:#2b2b2b}
+.pos.p3{background:#c98a4b;color:#fff}
+.person{display:inline-flex;align-items:center;gap:.45rem;flex-wrap:wrap}
+.person a{color:var(--ink);text-decoration:none;font-weight:600}
+.person a:hover{text-decoration:underline}
+.ico{width:22px;height:22px;flex:none;vertical-align:middle}
+.badge-guest{font-size:.68rem;background:var(--mint);color:#1d4a2c;border-radius:999px;padding:.08rem .5rem;font-weight:800;text-transform:uppercase;letter-spacing:.03em}
+.legend{display:flex;flex-wrap:wrap;gap:1rem;font-size:.88rem;color:var(--muted);margin-top:.8rem}
+.legend span{display:inline-flex;align-items:center;gap:.35rem}
+
+.ev-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1rem}
+.ev{position:relative;display:flex;flex-direction:column;gap:.15rem;background:var(--cream-2);border-radius:12px;padding:1rem 1.1rem 1rem 1.1rem;text-decoration:none;color:var(--ink);border:1px solid rgba(43,36,32,.12);box-shadow:0 3px 10px rgba(0,0,0,.12);min-height:44px}
+.ev:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.2)}
+.ev-date{font-size:1.7rem;font-weight:800;color:var(--red-dark);line-height:1.1}
+.ev-suit{position:absolute;top:.6rem;right:.8rem;color:var(--red);font-size:1.3rem}
+.ev-meta{margin-top:.35rem;font-size:.88rem;color:var(--muted)}
+.tag{display:inline-block;font-size:.75rem;font-weight:800;padding:.1rem .55rem;border-radius:999px;background:rgba(43,36,32,.1);text-transform:uppercase;letter-spacing:.03em;vertical-align:middle}
+.tag.ativa,.tag.realizado{background:var(--mint);color:#1d4a2c}
+.tag.arquivada{background:#d8ccb0}
+.tag.agendado{background:var(--pink);color:#5a1020}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:.75rem;margin:.6rem 0 1rem}
+.stat{background:var(--cream-2);border-radius:12px;padding:.7rem .9rem;border:1px solid rgba(43,36,32,.1)}
+.stat strong{display:block;font-size:1.6rem;color:var(--red-dark);line-height:1.1}
+.stat span{font-size:.85rem;color:var(--muted)}
+.bar{height:10px;border-radius:6px;background:var(--red);min-width:2px}
+
+label{display:block;font-weight:700;margin:.7rem 0 .25rem}
+input,select{font:inherit;min-height:44px;padding:.45rem .6rem;border-radius:9px;border:1px solid #b9ae98;background:#fffdf7;color:var(--ink);width:100%}
+input:focus,select:focus{outline:3px solid var(--pink);outline-offset:1px}
+fieldset{border:1px solid rgba(43,36,32,.18);border-radius:12px;margin:1rem 0 0;padding:.6rem .9rem .9rem}
+legend{font-weight:800;color:var(--red-dark);padding:0 .3rem}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:0 1rem}
+.checks{display:flex;flex-wrap:wrap;gap:.4rem .9rem}
+.check{display:inline-flex;align-items:center;gap:.4rem;font-weight:600;margin:.25rem 0;min-height:40px}
+.check input{width:22px;height:22px;min-height:0}
+input.score{width:4.6rem;text-align:center;padding:.35rem .3rem}
+.form-actions{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:flex-end;margin-top:1.1rem}
+.result{margin-top:.9rem;padding:.8rem 1rem;border-radius:12px;background:var(--cream-2);border:2px dashed rgba(179,18,58,.4)}
+.result p{margin:.2rem 0}
+details{margin-top:.8rem}
+summary{cursor:pointer;font-weight:700;color:var(--red-dark);min-height:32px}
+.mini{font-size:.9rem}
+.mini th,.mini td{padding:.3rem .5rem}
+
+.person-row{display:grid;grid-template-columns:auto 1fr 10rem auto;gap:.5rem;align-items:center;padding:.35rem 0;border-bottom:1px solid rgba(43,36,32,.1)}
+.inline-form{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-top:1rem}
+.inline-form input,.inline-form select{flex:1 1 180px;width:auto}
+.inline-form label{margin:0;flex-basis:100%}
+.seasons{list-style:none;margin:0;padding:0}
+.seasons li{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;padding:.55rem 0;border-bottom:1px solid rgba(43,36,32,.1)}
+.seasons li strong{font-size:1.2rem;min-width:3.5rem}
+.sumulas{list-style:none;margin:0;padding:0}
+.sumulas li{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.5rem;align-items:center;padding:.6rem 0;border-bottom:1px solid rgba(43,36,32,.1)}
+
+.login{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem 1rem;gap:1.2rem}
+.login-logo{width:min(240px,62vw);height:auto;filter:drop-shadow(0 10px 22px rgba(0,0,0,.5))}
+.login-card{width:100%;max-width:380px}
+.login-card h1{text-align:center}
+.stack{display:flex;flex-direction:column;gap:.6rem;margin-top:.8rem}
+.err{color:#a10f0f;font-weight:700;min-height:1.4em;margin:.6rem 0 0}
+.loading{color:var(--cream);text-align:center;padding:4rem 1rem;font-size:1.1rem}
+
+#toast{position:fixed;left:50%;bottom:1.2rem;transform:translate(-50%,150%);background:var(--ink);color:#fff;padding:.7rem 1.1rem;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.4);transition:transform .25s;z-index:50;max-width:calc(100vw - 2rem);text-align:center}
+#toast.show{transform:translate(-50%,0)}
+
+.sheet{background:#f3ead3;color:#2b2420;padding:20px 26px;font-family:system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.sheet-head{display:flex;align-items:center;gap:18px;border-bottom:3px solid #b3123a;padding-bottom:10px;margin-bottom:10px}
+.sheet-head img{width:100px;height:100px}
+.sheet h1{margin:0;color:#8c0e2d;font-size:24px;line-height:1.15}
+.sheet-head p{margin:4px 0 0;font-size:14px}
+.sheet table{width:100%;border-collapse:collapse;font-size:14px}
+.sheet th,.sheet td{padding:4px 8px;border-bottom:1px solid #d8ccb0;text-align:left}
+.sheet th{font-size:11px;text-transform:uppercase;color:#6f655b}
+.sheet .num{text-align:right;font-variant-numeric:tabular-nums}
+.sheet .pts{font-weight:800}
+.sheet .ico{width:15px;height:15px;margin-right:4px}
+.sheet .badge-guest{font-size:9px;margin-left:4px}
+.sheet-foot{font-size:11px;color:#6f655b;margin:10px 0 0}
+.sheet-img{width:1080px;padding:48px 56px}
+.sheet-img .sheet-head{gap:28px;padding-bottom:20px;margin-bottom:16px;border-bottom-width:5px}
+.sheet-img .sheet-head img{width:170px;height:170px}
+.sheet-img h1{font-size:46px}
+.sheet-img .sheet-head p{font-size:24px}
+.sheet-img table{font-size:28px}
+.sheet-img th{font-size:18px}
+.sheet-img th,.sheet-img td{padding:11px 14px}
+.sheet-img .ico{width:28px;height:28px;margin-right:8px}
+.sheet-img .badge-guest{font-size:15px;margin-left:8px}
+.sheet-img .sheet-foot{font-size:20px;margin-top:18px}
+.sheet-host{position:fixed;left:-20000px;top:0}
+#print-area{display:none}
+@page{size:A4;margin:12mm}
+@media print{
+  body{background:#fff!important}
+  #app,#toast{display:none!important}
+  #print-area{display:block!important}
+  .sheet{padding:0;background:#fff}
+  .sheet *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+
+@media (max-width:640px){
+  html{font-size:16px}
+  .top-inner{grid-template-columns:auto 1fr;grid-template-areas:"brand right" "nav nav";padding:.4rem .75rem}
+  .top-right{justify-self:end}
+  .brand img{width:44px;height:44px}
+  main{padding:.75rem}
+  .card{padding:1rem .9rem}
+  .card h1{font-size:1.3rem}
+  .hide-sm{display:none}
+  .rank th,.rank td{padding:.5rem .3rem}
+  .pos{width:1.9rem;height:1.9rem}
+  .person-row{grid-template-columns:auto 1fr;}
+  .person-row select,.person-row .btn{grid-column:span 1}
+  .toolbar{flex-direction:column;align-items:stretch}
+  .toolbar .actions .btn{flex:1}
+  .form-actions .btn{flex:1}
+}
+</style>
+</head>
+<body>
+<div id="app"><div class="loading">Carregando…</div></div>
+<div id="print-area" aria-hidden="true"></div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script type="module">
+/* Configuração do Firebase: cole aqui o objeto firebaseConfig do console
+   (Configurações do projeto > Seus apps > app da Web). Enquanto for null,
+   o app roda em modo demonstração, com os dados salvos só no navegador. */
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyDW6v-oEb_Sl8sUvP0BYxTdxs2bBWGGQvg",
+  authDomain: "baravilhosas-1c078.firebaseapp.com",
+  projectId: "baravilhosas-1c078",
+  storageBucket: "baravilhosas-1c078.firebasestorage.app",
+  messagingSenderId: "888467918351",
+  appId: "1:888467918351:web:315c8e8a8eb3c6b2321d7a"
+};
+
+/* Fase de teste: libera a página escondida #/restaurar (só com a senha de edição),
+   que volta 2026 aos dados reais até outubro. Mudar para false na entrega definitiva. */
+const MODO_TESTE = true;
+
+const ACCOUNTS = { leitura: 'leitura@baravilhosas.app', editora: 'editora@baravilhosas.app' };
+const FB = 'https://www.gstatic.com/firebasejs/10.14.1/';
+const H2C = 'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js';
+const SEED_URL = 'data/seed-2026.json';
+const LOGO = 'assets/img/logo.webp';
+const DEFAULT_TABLE = [
+  {min:0,max:100,win:10,lose:10},{min:110,max:300,win:11,lose:9},{min:310,max:500,win:12,lose:8},
+  {min:510,max:800,win:13,lose:7},{min:810,max:1000,win:14,lose:6},{min:1010,max:1300,win:15,lose:5},
+  {min:1310,max:1500,win:16,lose:4},{min:1510,max:1800,win:17,lose:3},{min:1810,max:2000,win:18,lose:2},
+  {min:2010,max:2300,win:19,lose:1},{min:2310,max:2500,win:20,lose:0},{min:2510,max:2800,win:21,lose:-1},
+  {min:2810,max:null,win:22,lose:-2}
+];
+const MONTHS = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+
+const S = {
+  role: null, authChecked: false, ready: false,
+  persons: {}, seasons: {}, year: +localStorage.getItem('bv-year') || null,
+  mode: localStorage.getItem('bv-mode') || 'grupo',
+  store: null, formHash: null, demo: !FIREBASE_CONFIG
+};
+
+const app = document.getElementById('app');
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const num = v => typeof v === 'number' && Number.isFinite(v);
+const fmtDate = d => d ? d.split('-').reverse().join('/') : '';
+const longDate = d => { if (!d) return ''; const [y, m, dd] = d.split('-'); return `${+dd} de ${MONTHS[+m - 1]} de ${y}`; };
+const today = () => new Date().toLocaleDateString('pt-BR');
+const slug = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const byName = (a, b) => a.name.localeCompare(b.name, 'pt-BR');
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+const ICON_MEMBER = `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><g fill="#b3123a"><circle cx="12" cy="6.8" r="4.3"/><circle cx="6.6" cy="10.8" r="4.3"/><circle cx="17.4" cy="10.8" r="4.3"/><circle cx="8.7" cy="16.8" r="4.3"/><circle cx="15.3" cy="16.8" r="4.3"/></g><circle cx="12" cy="12.2" r="3.2" fill="#7a0a26"/><circle cx="12" cy="12.2" r="1.4" fill="#e9a0a8"/></svg>`;
+const ICON_GUEST = `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="2.5" width="16" height="19" rx="2.5" fill="#fbf6ea" stroke="#2a3a2e" stroke-width="1.6"/><path d="M12 6.8l3.4 5.2-3.4 5.2-3.4-5.2z" fill="#b3123a"/></svg>`;
+
+/* ---------- dados e cálculos ---------- */
+const season = (y = S.year) => S.seasons[y];
+const eventsOf = (y = S.year) => Object.values(season(y)?.events || {}).sort((a, b) => a.date.localeCompare(b.date));
+const isMember = (pid, y = S.year) => !!season(y)?.members?.includes(pid);
+const pname = pid => S.persons[pid]?.name || pid;
+const canEdit = () => S.role === 'editora' && season()?.status === 'ativa';
+const played = (ev, pid) => (ev.scores?.[pid] || []).some(num);
+const dayTotal = (ev, pid) => (ev.scores?.[pid] || []).reduce((s, v) => s + (num(v) ? v : 0), 0);
+const eventPlayed = ev => Object.keys(ev.scores || {}).some(pid => played(ev, pid));
+
+function rankRows(rows) {
+  rows.sort((a, b) => b.pts - a.pts || a.name.localeCompare(b.name, 'pt-BR'));
+  let pos = 0;
+  rows.forEach((r, i) => { if (i === 0 || r.pts !== rows[i - 1].pts) pos = i + 1; r.pos = pos; });
+  return rows;
+}
+
+function generalRanking(y, mode) {
+  const s = season(y); if (!s) return [];
+  const tot = {}, cnt = {};
+  for (const ev of eventsOf(y)) for (const pid of Object.keys(ev.scores || {})) {
+    if (!played(ev, pid)) continue;
+    tot[pid] = (tot[pid] || 0) + dayTotal(ev, pid);
+    cnt[pid] = (cnt[pid] || 0) + 1;
+  }
+  const pids = new Set(s.members || []);
+  if (mode === 'todas') Object.keys(tot).forEach(p => pids.add(p));
+  return rankRows([...pids].map(pid => ({ pid, name: pname(pid), pts: tot[pid] || 0, n: cnt[pid] || 0 })));
+}
+
+function dayRanking(ev, mode, y = S.year) {
+  const pids = Object.keys(ev.scores || {}).filter(pid => played(ev, pid) && (mode === 'todas' || isMember(pid, y)));
+  return rankRows(pids.map(pid => ({ pid, name: pname(pid), pts: dayTotal(ev, pid), games: ev.scores[pid] })));
+}
+
+function gameCols(ev) {
+  const c = [0, 1, 2, 3].filter(i => Object.values(ev.scores || {}).some(a => num(a?.[i])));
+  return c.length ? c : [0, 1, 2];
+}
+
+function pointsFor(diff, table) {
+  let row = table[0];
+  for (const r of table) if (diff >= r.min) row = r;
+  return row;
+}
+
+/* ---------- pedaços de interface ---------- */
+function personCell(pid, { link = true, y = S.year } = {}) {
+  const m = isMember(pid, y);
+  const name = link ? `<a href="#/jogadora/${encodeURIComponent(pid)}">${esc(pname(pid))}</a>` : `<span>${esc(pname(pid))}</span>`;
+  return `<span class="person">${m ? ICON_MEMBER : ICON_GUEST}${name}${m ? '' : '<span class="badge-guest">Convidada</span>'}</span>`;
+}
+
+const posBadge = p => `<span class="pos ${p <= 3 ? 'p' + p : ''}">${p}</span>`;
+
+function rankTable(rows, { cols = null, count = false } = {}) {
+  if (!rows.length) return '<p class="empty">Ainda não há pontos lançados.</p>';
+  const head = `<tr><th>#</th><th>Jogadora</th>${cols ? cols.map(i => `<th class="num">${i + 1}º</th>`).join('') : ''}${count ? '<th class="num hide-sm">Encontros</th>' : ''}<th class="num">Pontos</th></tr>`;
+  const body = rows.map(r => `<tr><td>${posBadge(r.pos)}</td><td>${personCell(r.pid)}</td>${cols ? cols.map(i => `<td class="num">${num(r.games?.[i]) ? r.games[i] : '-'}</td>`).join('') : ''}${count ? `<td class="num hide-sm">${r.n}</td>` : ''}<td class="num pts">${r.pts}</td></tr>`).join('');
+  return `<div class="table-wrap"><table class="rank"><thead>${head}</thead><tbody>${body}</tbody></table></div>`;
+}
+
+const modeToggle = () => `<div class="seg" role="group" aria-label="Quem aparece no ranking">
+  <button type="button" data-action="mode" data-mode="grupo" class="${S.mode === 'grupo' ? 'on' : ''}" aria-pressed="${S.mode === 'grupo'}">${ICON_MEMBER} Só o grupo</button>
+  <button type="button" data-action="mode" data-mode="todas" class="${S.mode === 'todas' ? 'on' : ''}" aria-pressed="${S.mode === 'todas'}">${ICON_GUEST} Com convidadas</button></div>`;
+
+const shareButtons = (kind, id = '') => `<div class="actions">
+  <button type="button" class="btn secondary" data-action="print" data-kind="${kind}" data-id="${esc(id)}">Imprimir</button>
+  <button type="button" class="btn" data-action="image" data-kind="${kind}" data-id="${esc(id)}">Salvar imagem</button></div>`;
+
+const legend = () => `<div class="legend"><span>${ICON_MEMBER} Integrante do grupo</span><span>${ICON_GUEST} Convidada</span></div>`;
+
+function header() {
+  const [v] = route();
+  const years = Object.keys(S.seasons).sort().reverse();
+  const tab = (key, label) => `<a href="#/${key}" class="${v === key || (key === 'encontros' && ['encontro', 'novo-encontro'].includes(v)) ? 'active' : ''}">${label}</a>`;
+  return `${S.demo ? '<div class="demo">Modo demonstração: Firebase ainda não configurado. Os dados ficam só neste navegador.</div>' : ''}
+  <header class="top"><div class="top-inner">
+    <a class="brand" href="#/ranking"><img src="${LOGO}" alt="Baravilhosas" width="52" height="52"></a>
+    <nav class="tabs" aria-label="Principal">${tab('ranking', 'Ranking')}${tab('encontros', 'Encontros')}${S.role === 'editora' ? tab('admin', 'Gerenciar') : ''}</nav>
+    <div class="top-right">
+      ${years.length ? `<label class="sr" for="season-sel">Ano</label><select id="season-sel" data-change="season">${years.map(y => `<option value="${y}" ${+y === +S.year ? 'selected' : ''}>${y}</option>`).join('')}</select>` : ''}
+      <button type="button" class="btn ghost sm" data-action="logout">Sair</button>
+    </div></div></header>`;
+}
+
+/* ---------- telas ---------- */
+function loginView() {
+  const inner = S.demo
+    ? `<h1>Ranking de Tranca</h1><p class="hint">Modo demonstração: o Firebase ainda não foi configurado, então não há senha.</p>
+       <div class="stack"><button class="btn" data-action="demo-login" data-role="leitura">Entrar para visualizar</button>
+       <button class="btn secondary" data-action="demo-login" data-role="editora">Entrar como editora</button></div>`
+    : `<form data-form="login"><h1>Ranking de Tranca</h1>
+       <label for="pw">Senha</label><input id="pw" name="pw" type="password" autocomplete="current-password" required>
+       <div class="stack"><button class="btn full" type="submit">Entrar</button></div>
+       <p class="err" id="login-err" role="alert"></p></form>`;
+  return `<div class="login"><img class="login-logo" src="${LOGO}" alt="Baravilhosas" width="240" height="240"><div class="card login-card" data-suit="♥">${inner}</div></div>`;
+}
+
+function emptySeasonView() {
+  if (S.role !== 'editora') return `<section class="card" data-suit="♠"><h1>Nenhum dado ainda</h1><p class="hint">Assim que a editora lançar os pontos, o ranking aparece aqui.</p></section>`;
+  return `<section class="card" data-suit="♠"><h1>Vamos começar</h1>
+    <p>Ainda não existe nenhuma temporada. Importe o histórico de 2026 (vindo da planilha, com os totais recalculados) ou crie uma temporada nova em <a href="#/admin">Gerenciar</a>.</p>
+    <div class="actions"><button class="btn" data-action="import-seed">Importar histórico de 2026</button></div></section>`;
+}
+
+function rankingView() {
+  const s = season(); if (!s) return emptySeasonView();
+  const rows = generalRanking(S.year, S.mode);
+  const evs = eventsOf().filter(eventPlayed);
+  const last = evs[evs.length - 1];
+  return `<section class="card" data-suit="♥">
+    <h1>Ranking geral ${S.year} ${s.status === 'arquivada' ? '<span class="tag arquivada">Arquivado</span>' : ''}</h1>
+    <p class="sub">${evs.length} encontro${evs.length === 1 ? '' : 's'} realizado${evs.length === 1 ? '' : 's'}${last ? ` · último em ${fmtDate(last.date)}` : ''}</p>
+    <div class="toolbar">${modeToggle()}${shareButtons('geral')}</div>
+    ${rankTable(rows, { count: true })}${legend()}</section>
+    ${last ? `<section class="card" data-suit="♦"><h2>Último encontro</h2><p class="sub">${longDate(last.date)}${last.hosts ? ' · Anfitriãs: ' + esc(last.hosts) : ''}</p>
+      <a class="btn secondary" href="#/encontro/${encodeURIComponent(last.id)}">Ver ranking do dia</a></section>` : ''}`;
+}
+
+function eventsView() {
+  const s = season(); if (!s) return emptySeasonView();
+  const evs = eventsOf().slice().reverse();
+  return `<section class="card" data-suit="♦">
+    <div class="toolbar"><div><h1>Encontros ${S.year}</h1><p class="sub" style="margin:0">Toque em um encontro para ver o ranking do dia.</p></div>
+    ${canEdit() ? '<a class="btn" href="#/novo-encontro">Novo encontro</a>' : ''}</div>
+    ${evs.length ? `<div class="ev-list">${evs.map(ev => {
+      const n = Object.keys(ev.scores || {}).filter(p => played(ev, p)).length;
+      const done = eventPlayed(ev);
+      return `<a class="ev" href="#/encontro/${encodeURIComponent(ev.id)}"><span class="ev-suit">♦</span>
+        <span class="ev-date">${fmtDate(ev.date).slice(0, 5)}</span><span>${longDate(ev.date)}</span>
+        ${ev.hosts ? `<span>Anfitriãs: ${esc(ev.hosts)}</span>` : ''}${ev.location ? `<span>Local: ${esc(ev.location)}</span>` : ''}
+        <span class="ev-meta"><span class="tag ${done ? 'realizado' : 'agendado'}">${done ? 'Realizado' : 'Agendado'}</span> ${done ? `· ${n} jogadoras` : ''}</span></a>`;
+    }).join('')}</div>` : '<p class="empty">Nenhum encontro cadastrado neste ano.</p>'}</section>`;
+}
+
+function eventView(id) {
+  const ev = season()?.events?.[id];
+  if (!ev) return notFound('Encontro não encontrado.');
+  const rows = dayRanking(ev, S.mode);
+  const sums = ev.sumulas || [];
+  const pair = p => p.map(x => esc(pname(x))).join(' e ');
+  return `<section class="card" data-suit="♣">
+    <a class="back" href="#/encontros">← Encontros</a>
+    <h1>Ranking do dia</h1>
+    <p class="sub">${longDate(ev.date)}${ev.hosts ? ' · Anfitriãs: ' + esc(ev.hosts) : ''}${ev.location ? ' · ' + esc(ev.location) : ''}</p>
+    <div class="toolbar">${modeToggle()}${rows.length ? shareButtons('dia', ev.id) : ''}</div>
+    ${rows.length ? rankTable(rows, { cols: gameCols(ev) }) : '<p class="empty">Encontro agendado, ainda sem pontos.</p>'}
+    ${rows.length ? legend() : ''}</section>
+    ${canEdit() ? `<section class="card" data-suit="♠"><h2>Editar este encontro</h2>
+      <div class="actions">
+        <a class="btn" href="#/encontro/${encodeURIComponent(ev.id)}/sumula">Nova súmula</a>
+        <a class="btn secondary" href="#/encontro/${encodeURIComponent(ev.id)}/pontos">Lançar pontos direto</a>
+        <a class="btn secondary" href="#/encontro/${encodeURIComponent(ev.id)}/editar">Dados do encontro</a>
+        <button class="btn danger" data-action="delete-event" data-id="${esc(ev.id)}">Excluir encontro</button>
+      </div></section>` : ''}
+    ${sums.length ? `<section class="card" data-suit="♦"><h2>Súmulas lançadas</h2><ul class="sumulas">${sums.map(su => `<li>
+      <span><strong>${su.game}º jogo${su.table ? ' · mesa ' + esc(su.table) : ''}:</strong> ${pair(su.pairA)} (${su.totalA}) x ${pair(su.pairB)} (${su.totalB})
+      <br><span class="muted">Diferença ${su.difference} → ${su.pointsA} e ${su.pointsB} pontos</span></span>
+      ${canEdit() ? `<button class="btn danger sm" data-action="delete-sumula" data-ev="${esc(ev.id)}" data-id="${esc(su.id)}">Excluir</button>` : ''}</li>`).join('')}</ul></section>` : ''}`;
+}
+
+function playerView(pid) {
+  const p = S.persons[pid];
+  if (!p) return notFound('Jogadora não encontrada.');
+  const member = isMember(pid);
+  const gr = generalRanking(S.year, member ? 'grupo' : 'todas');
+  const me = gr.find(r => r.pid === pid);
+  const evs = eventsOf().filter(ev => played(ev, pid));
+  const max = Math.max(1, ...evs.map(ev => dayTotal(ev, pid)));
+  return `<section class="card" data-suit="♥">
+    <a class="back" href="#/ranking">← Ranking</a>
+    <h1><span class="person">${member ? ICON_MEMBER : ICON_GUEST}${esc(p.name)}${member ? '' : '<span class="badge-guest">Convidada</span>'}</span></h1>
+    <div class="stats">
+      <div class="stat"><strong>${me ? me.pts : 0}</strong><span>pontos em ${S.year}</span></div>
+      <div class="stat"><strong>${me ? me.pos + 'º' : '-'}</strong><span>no ranking ${member ? 'do grupo' : 'com convidadas'}</span></div>
+      <div class="stat"><strong>${evs.length}</strong><span>encontros</span></div>
+    </div>
+    ${evs.length ? `<div class="table-wrap"><table class="rank"><thead><tr><th>Encontro</th><th class="num hide-sm">Jogos</th><th>Desempenho</th><th class="num">Pontos</th><th class="num">Posição</th></tr></thead><tbody>
+      ${evs.map(ev => {
+        const t = dayTotal(ev, pid);
+        const d = dayRanking(ev, member ? 'grupo' : 'todas').find(r => r.pid === pid);
+        return `<tr><td><a href="#/encontro/${encodeURIComponent(ev.id)}">${fmtDate(ev.date)}</a></td>
+          <td class="num hide-sm">${(ev.scores[pid] || []).filter(num).join(' · ')}</td>
+          <td style="width:35%"><div class="bar" style="width:${Math.max(0, t) / max * 100}%"></div></td>
+          <td class="num pts">${t}</td><td class="num">${d ? d.pos + 'º' : '-'}</td></tr>`;
+      }).join('')}</tbody></table></div>` : '<p class="empty">Ainda não jogou neste ano.</p>'}</section>`;
+}
+
+function eventFormView(id) {
+  if (!canEdit()) return noAccess();
+  const ev = id ? season().events?.[id] : null;
+  if (id && !ev) return notFound('Encontro não encontrado.');
+  const guests = Object.values(S.persons).filter(p => !isMember(p.id)).sort(byName);
+  const back = ev ? `#/encontro/${encodeURIComponent(ev.id)}` : '#/encontros';
+  return `<section class="card" data-suit="♦"><a class="back" href="${back}">← Voltar</a>
+    <h1>${ev ? 'Dados do encontro' : 'Novo encontro'}</h1>
+    <form data-form="event" data-id="${esc(ev?.id || '')}">
+      <div class="grid2">
+        <div><label for="f-date">Data</label><input id="f-date" type="date" name="date" required value="${esc(ev?.date || '')}"></div>
+        <div><label for="f-hosts">Anfitriãs</label><input id="f-hosts" name="hosts" value="${esc(ev?.hosts || '')}" placeholder="Ex.: Adri e Larissa"></div>
+        <div><label for="f-loc">Local</label><input id="f-loc" name="location" value="${esc(ev?.location || '')}" placeholder="Endereço ou casa de quem"></div>
+      </div>
+      <fieldset><legend>Convidadas presentes</legend>
+        ${guests.length ? `<div class="checks">${guests.map(g => `<label class="check"><input type="checkbox" name="guest" value="${esc(g.id)}" ${ev?.guests?.includes(g.id) ? 'checked' : ''}>${ICON_GUEST} ${esc(g.name)}</label>`).join('')}</div>` : '<p class="hint">Nenhuma convidada cadastrada ainda.</p>'}
+        <label for="f-new">Novas convidadas <span class="muted">(separe os nomes por vírgula)</span></label>
+        <input id="f-new" name="newGuests" placeholder="Ex.: Kelly, Monica">
+      </fieldset>
+      <div class="form-actions"><a class="btn secondary" href="${back}">Cancelar</a><button class="btn" type="submit">Salvar encontro</button></div>
+    </form></section>`;
+}
+
+function playersFor(ev) {
+  const members = (season().members || []).slice().sort((a, b) => pname(a).localeCompare(pname(b), 'pt-BR'));
+  const guests = (ev.guests || []).filter(g => !members.includes(g)).sort((a, b) => pname(a).localeCompare(pname(b), 'pt-BR'));
+  return [...members, ...guests];
+}
+
+function pointsFormView(id) {
+  if (!canEdit()) return noAccess();
+  const ev = season().events?.[id];
+  if (!ev) return notFound('Encontro não encontrado.');
+  const pids = playersFor(ev);
+  return `<section class="card" data-suit="♣"><a class="back" href="#/encontro/${encodeURIComponent(id)}">← Voltar</a>
+    <h1>Lançar pontos direto</h1>
+    <p class="sub">${longDate(ev.date)}</p>
+    <p class="hint">Digite os pontos de ranking de cada jogadora em cada jogo da noite. Deixe em branco quem não jogou. Valores negativos são aceitos (ex.: -2). Para incluir convidadas, use "Dados do encontro".</p>
+    <form data-form="points" data-id="${esc(id)}">
+      <div class="table-wrap"><table class="rank"><thead><tr><th>Jogadora</th>${[0, 1, 2, 3].map(i => `<th class="num">${i + 1}º jogo</th>`).join('')}<th class="num">Total</th></tr></thead><tbody>
+      ${pids.map(pid => `<tr><td>${personCell(pid, { link: false })}</td>
+        ${[0, 1, 2, 3].map(i => { const v = ev.scores?.[pid]?.[i]; return `<td class="num"><input class="score" type="number" step="1" name="s:${esc(pid)}:${i}" value="${num(v) ? v : ''}" aria-label="${esc(pname(pid))}, ${i + 1}º jogo"></td>`; }).join('')}
+        <td class="num pts" data-total>${played(ev, pid) ? dayTotal(ev, pid) : '-'}</td></tr>`).join('')}
+      </tbody></table></div>
+      <div class="form-actions"><a class="btn secondary" href="#/encontro/${encodeURIComponent(id)}">Cancelar</a><button class="btn" type="submit">Salvar pontos</button></div>
+    </form></section>`;
+}
+
+function sumulaFormView(id) {
+  if (!canEdit()) return noAccess();
+  const ev = season().events?.[id];
+  if (!ev) return notFound('Encontro não encontrado.');
+  const pids = playersFor(ev);
+  const nextGame = Math.min(4, Math.max(0, ...(ev.sumulas || []).map(s => s.game)) + 1);
+  const opts = `<option value="">Escolha…</option>${pids.map(p => `<option value="${esc(p)}">${esc(pname(p))}${isMember(p) ? '' : ' (convidada)'}</option>`).join('')}`;
+  const table = season().scoreTable || DEFAULT_TABLE;
+  return `<section class="card" data-suit="♠"><a class="back" href="#/encontro/${encodeURIComponent(id)}">← Voltar</a>
+    <h1>Nova súmula</h1>
+    <p class="sub">${longDate(ev.date)}</p>
+    <form data-form="sumula" data-id="${esc(id)}">
+      <div class="grid2">
+        <div><label for="s-game">Jogo da noite</label><select id="s-game" name="game">${[1, 2, 3, 4].map(g => `<option value="${g}" ${g === nextGame ? 'selected' : ''}>${g}º jogo</option>`).join('')}</select></div>
+        <div><label for="s-table">Mesa</label><input id="s-table" name="table" inputmode="numeric" placeholder="Ex.: 1"></div>
+      </div>
+      <div class="grid2">
+        <fieldset><legend>Dupla A</legend><label for="a1">Jogadora 1</label><select id="a1" name="a1">${opts}</select><label for="a2">Jogadora 2</label><select id="a2" name="a2">${opts}</select></fieldset>
+        <fieldset><legend>Dupla B</legend><label for="b1">Jogadora 1</label><select id="b1" name="b1">${opts}</select><label for="b2">Jogadora 2</label><select id="b2" name="b2">${opts}</select></fieldset>
+      </div>
+      <fieldset><legend>Pontos das rodadas</legend>
+        <div class="table-wrap"><table class="rank"><thead><tr><th>Rodada</th><th class="num">Dupla A</th><th class="num">Dupla B</th></tr></thead><tbody>
+        ${[0, 1, 2, 3].map(i => `<tr><td>${i + 1}ª rodada</td><td class="num"><input class="score" type="number" step="1" name="ra${i}" aria-label="Dupla A, ${i + 1}ª rodada"></td><td class="num"><input class="score" type="number" step="1" name="rb${i}" aria-label="Dupla B, ${i + 1}ª rodada"></td></tr>`).join('')}
+        </tbody><tfoot><tr><th>Total</th><th class="num pts" id="ta">0</th><th class="num pts" id="tb">0</th></tr></tfoot></table></div>
+      </fieldset>
+      <div class="result" id="sumula-result" aria-live="polite"><p>Preencha as rodadas para ver o resultado.</p></div>
+      <details><summary>Tabela de conversão da diferença</summary>
+        <table class="rank mini"><thead><tr><th>Diferença</th><th class="num">Vencedoras</th><th class="num">Perdedoras</th></tr></thead><tbody>
+        ${table.map(r => `<tr><td>${r.max == null ? r.min + ' ou mais' : r.min + ' a ' + r.max}</td><td class="num">${r.win}</td><td class="num">${r.lose}</td></tr>`).join('')}</tbody></table></details>
+      <div class="form-actions"><a class="btn secondary" href="#/encontro/${encodeURIComponent(id)}">Cancelar</a><button class="btn" type="submit">Salvar súmula</button></div>
+    </form></section>`;
+}
+
+function adminView() {
+  if (S.role !== 'editora') return noAccess();
+  const people = Object.values(S.persons).sort(byName);
+  const years = Object.keys(S.seasons).sort().reverse();
+  const nextYear = years.length ? Math.max(...years.map(Number)) + 1 : new Date().getFullYear();
+  const act = activeSeason();
+  return `<section class="card" data-suit="♥"><h1>Pessoas</h1>
+    <p class="hint">Integrantes entram no ranking oficial da temporada ativa${act ? ` (${act.year})` : ''}. Convidadas aparecem só no modo "Com convidadas".</p>
+    ${people.map(p => `<div class="person-row" data-id="${esc(p.id)}">${p.type === 'membro' ? ICON_MEMBER : ICON_GUEST}
+      <input name="name" value="${esc(p.name)}" aria-label="Nome">
+      <select name="type" aria-label="Tipo"><option value="membro" ${p.type === 'membro' ? 'selected' : ''}>Integrante</option><option value="convidada" ${p.type !== 'membro' ? 'selected' : ''}>Convidada</option></select>
+      <button type="button" class="btn secondary sm" data-action="save-person" data-id="${esc(p.id)}">Salvar</button></div>`).join('') || '<p class="empty">Nenhuma pessoa cadastrada.</p>'}
+    <form data-form="add-person" class="inline-form"><label for="np">Adicionar pessoa</label>
+      <input id="np" name="name" placeholder="Nome" required>
+      <select name="type" aria-label="Tipo"><option value="membro">Integrante</option><option value="convidada">Convidada</option></select>
+      <button class="btn" type="submit">Adicionar</button></form></section>
+
+    <section class="card" data-suit="♣"><h1>Temporadas</h1>
+    <ul class="seasons">${years.map(y => { const x = S.seasons[y]; return `<li><strong>${y}</strong>
+      <span class="tag ${x.status}">${x.status === 'ativa' ? 'Ativa' : 'Arquivada'}</span>
+      <span class="muted">${Object.keys(x.events || {}).length} encontros</span>
+      <button type="button" class="btn secondary sm" data-action="season-status" data-year="${y}">${x.status === 'ativa' ? 'Arquivar' : 'Reabrir'}</button>
+      <button type="button" class="btn secondary sm" data-action="backup" data-year="${y}">Baixar backup</button></li>`; }).join('') || '<li class="muted">Nenhuma temporada.</li>'}</ul>
+    <form data-form="new-season" class="inline-form"><label for="ny">Iniciar novo ano</label>
+      <input id="ny" name="year" type="number" value="${nextYear}" min="2000" max="2100" required>
+      <button class="btn" type="submit">Iniciar novo ano</button></form>
+    <p class="hint">O ranking do novo ano começa do zero, com as integrantes atuais. O ano anterior fica arquivado para consulta.</p></section>
+    ${!S.seasons[2026] ? `<section class="card" data-suit="♦"><h1>Histórico</h1><p>Importar os dados de 2026 da planilha, com os totais recalculados.</p><button class="btn" data-action="import-seed">Importar histórico de 2026</button></section>` : ''}`;
+}
+
+function restoreView() {
+  if (!MODO_TESTE || S.role !== 'editora') return notFound('Página não encontrada.');
+  return `<section class="card" data-suit="♠"><h1>Restaurar dados reais de 2026</h1>
+    <p>Apaga tudo o que foi lançado na fase de teste (encontros novos, súmulas, correções, convidadas e temporadas criadas no teste) e volta aos dados reais até outubro.</p>
+    <button class="btn danger" data-action="restore-seed">Restaurar dados reais (até outubro)</button></section>`;
+}
+
+const notFound = msg => `<section class="card" data-suit="♠"><h1>Ops</h1><p>${esc(msg)}</p><a class="btn secondary" href="#/ranking">Ir para o ranking</a></section>`;
+const noAccess = () => `<section class="card" data-suit="♠"><h1>Sem permissão</h1><p>Esta área é só para a editora${season()?.status === 'arquivada' ? ', e esta temporada está arquivada' : ''}.</p><a class="btn secondary" href="#/ranking">Ir para o ranking</a></section>`;
+
+/* ---------- impressão e imagem ---------- */
+function sheetHTML(kind, id, forImage) {
+  let title, sub, table;
+  const modeLabel = S.mode === 'grupo' ? 'Só o grupo' : 'Com convidadas';
+  const cell = pid => `${isMember(pid) ? ICON_MEMBER : ICON_GUEST}${esc(pname(pid))}${isMember(pid) ? '' : '<span class="badge-guest">Convidada</span>'}`;
+  if (kind === 'dia') {
+    const ev = season().events[id];
+    const cols = gameCols(ev);
+    const rows = dayRanking(ev, S.mode);
+    title = 'Ranking do dia';
+    sub = `${longDate(ev.date)}${ev.hosts ? ' · Anfitriãs: ' + esc(ev.hosts) : ''}`;
+    table = `<tr><th>#</th><th>Jogadora</th>${cols.map(i => `<th class="num">${i + 1}º</th>`).join('')}<th class="num">Pontos</th></tr>` +
+      rows.map(r => `<tr><td>${r.pos}º</td><td>${cell(r.pid)}</td>${cols.map(i => `<td class="num">${num(r.games[i]) ? r.games[i] : '-'}</td>`).join('')}<td class="num pts">${r.pts}</td></tr>`).join('');
+  } else {
+    const rows = generalRanking(S.year, S.mode);
+    const n = eventsOf().filter(eventPlayed).length;
+    title = `Ranking geral ${S.year}`;
+    sub = `${n} encontro${n === 1 ? '' : 's'} realizado${n === 1 ? '' : 's'}`;
+    table = `<tr><th>#</th><th>Jogadora</th><th class="num">Encontros</th><th class="num">Pontos</th></tr>` +
+      rows.map(r => `<tr><td>${r.pos}º</td><td>${cell(r.pid)}</td><td class="num">${r.n}</td><td class="num pts">${r.pts}</td></tr>`).join('');
+  }
+  return `<div class="sheet ${forImage ? 'sheet-img' : ''}"><div class="sheet-head"><img src="${LOGO}" alt=""><div><h1>${title}</h1><p>${sub}</p></div></div>
+    <table>${table}</table><p class="sheet-foot">${modeLabel} · gerado em ${today()}</p></div>`;
+}
+
+const imagesLoaded = el => Promise.all([...el.querySelectorAll('img')].map(i => i.complete ? null : new Promise(r => { i.onload = i.onerror = r; })));
+
+function loadScript(src) {
+  if (loadScript.cache?.[src]) return loadScript.cache[src];
+  loadScript.cache ||= {};
+  return loadScript.cache[src] = new Promise((ok, fail) => {
+    const s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = () => { delete loadScript.cache[src]; fail(new Error('Falha ao carregar ' + src)); };
+    document.head.appendChild(s);
+  });
+}
+
+async function printSheet(kind, id) {
+  const pa = document.getElementById('print-area');
+  pa.innerHTML = sheetHTML(kind, id, false);
+  await imagesLoaded(pa);
+  window.print();
+}
+
+async function saveImage(kind, id) {
+  toast('Gerando imagem…');
+  try {
+    await loadScript(H2C);
+    const host = document.createElement('div');
+    host.className = 'sheet-host';
+    host.innerHTML = sheetHTML(kind, id, true);
+    document.body.appendChild(host);
+    await imagesLoaded(host);
+    const canvas = await window.html2canvas(host.firstElementChild, { scale: 1, backgroundColor: '#f3ead3' });
+    host.remove();
+    const blob = await new Promise(r => canvas.toBlob(r, 'image/png'));
+    const name = kind === 'dia' ? `baravilhosas-ranking-do-dia-${id}.png` : `baravilhosas-ranking-geral-${S.year}.png`;
+    const file = new File([blob], name, { type: 'image/png' });
+    if (matchMedia('(pointer:coarse)').matches && navigator.canShare?.({ files: [file] })) {
+      try { await navigator.share({ files: [file], title: 'Baravilhosas' }); return; }
+      catch (e) { if (e.name === 'AbortError') return; }
+    }
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 3000);
+    toast('Imagem salva');
+  } catch (e) {
+    console.error(e); toast('Não foi possível gerar a imagem.');
+  }
+}
+
+/* ---------- armazenamento ---------- */
+async function fetchSeed() {
+  const r = await fetch(SEED_URL, { cache: 'no-store' });
+  if (!r.ok) throw new Error('seed');
+  return r.json();
+}
+
+const clean = o => JSON.parse(JSON.stringify(o));
+
+const LocalStore = {
+  KEY: 'baravilhosas-demo-v1',
+  async init() {
+    const raw = localStorage.getItem(this.KEY);
+    if (raw) { const d = JSON.parse(raw); S.persons = d.persons || {}; S.seasons = d.seasons || {}; }
+    else { try { await this.importSeed(await fetchSeed()); } catch { toast('Abra o app por um servidor (http) para carregar os dados de exemplo.'); } }
+    S.role = sessionStorage.getItem('bv-demo-role');
+    S.authChecked = true; S.ready = true;
+  },
+  persist() { localStorage.setItem(this.KEY, JSON.stringify({ persons: S.persons, seasons: S.seasons })); },
+  async savePerson(p) { S.persons[p.id] = clean(p); this.persist(); },
+  async saveSeason(s) { const { events, ...rest } = s; S.seasons[s.year] = { ...clean(rest), events: S.seasons[s.year]?.events || {} }; this.persist(); },
+  async saveEvent(y, ev) { S.seasons[y].events[ev.id] = clean(ev); this.persist(); },
+  async deleteEvent(y, id) { delete S.seasons[y].events[id]; this.persist(); },
+  async importSeed(seed) {
+    seed.persons.forEach(p => { S.persons[p.id] = p; });
+    S.seasons[seed.season.year] = { ...seed.season, events: Object.fromEntries(seed.events.map(e => [e.id, e])) };
+    this.persist();
+  },
+  async login(role) { S.role = role; sessionStorage.setItem('bv-demo-role', role); render(); },
+  async logout() { sessionStorage.removeItem('bv-demo-role'); S.role = null; render(); },
+  async restoreSeed(seed, eventIds, extraPersons, testSeasons) {
+    extraPersons.forEach(id => delete S.persons[id]);
+    testSeasons.forEach(s => delete S.seasons[s.year]);
+    await this.importSeed(seed);
+  }
+};
+
+const FirebaseStore = {
+  subs: [], evSubs: {},
+  async init() {
+    const [{ initializeApp }, authMod, fs] = await Promise.all([
+      import(FB + 'firebase-app.js'), import(FB + 'firebase-auth.js'), import(FB + 'firebase-firestore.js')
+    ]);
+    this.fs = fs; this.authMod = authMod;
+    const fapp = initializeApp(FIREBASE_CONFIG);
+    this.auth = authMod.getAuth(fapp);
+    this.db = fs.getFirestore(fapp);
+    authMod.onAuthStateChanged(this.auth, user => {
+      S.authChecked = true;
+      this.unsubAll();
+      S.persons = {}; S.seasons = {}; S.ready = false;
+      if (!user) { S.role = null; render(); return; }
+      S.role = user.email === ACCOUNTS.editora ? 'editora' : 'leitura';
+      render();
+      this.subscribe();
+    });
+  },
+  unsubAll() { this.subs.forEach(u => u()); Object.values(this.evSubs).forEach(u => u()); this.subs = []; this.evSubs = {}; },
+  subscribe() {
+    const { collection, onSnapshot } = this.fs;
+    const fail = e => { console.error(e); toast('Erro de conexão com o banco de dados.'); };
+    let gotP = false, gotS = false;
+    const changed = () => { if (gotP && gotS) S.ready = true; dataChanged(); };
+    this.subs.push(onSnapshot(collection(this.db, 'persons'), snap => {
+      const m = {}; snap.forEach(d => { m[d.id] = { id: d.id, ...d.data() }; });
+      S.persons = m; gotP = true; changed();
+    }, fail));
+    this.subs.push(onSnapshot(collection(this.db, 'seasons'), snap => {
+      const next = {};
+      snap.forEach(d => {
+        const y = d.id;
+        next[y] = { ...d.data(), year: +y, events: S.seasons[y]?.events || {} };
+        if (!this.evSubs[y]) this.evSubs[y] = onSnapshot(collection(this.db, 'seasons', y, 'events'), es => {
+          const m = {}; es.forEach(x => { m[x.id] = { id: x.id, ...x.data() }; });
+          if (S.seasons[y]) S.seasons[y].events = m;
+          dataChanged();
+        }, fail);
+      });
+      S.seasons = next; gotS = true; changed();
+    }, fail));
+  },
+  async login(pw) {
+    const { signInWithEmailAndPassword } = this.authMod;
+    try { await signInWithEmailAndPassword(this.auth, ACCOUNTS.leitura, pw); }
+    catch { await signInWithEmailAndPassword(this.auth, ACCOUNTS.editora, pw); }
+  },
+  logout() { return this.authMod.signOut(this.auth); },
+  savePerson(p) { return this.fs.setDoc(this.fs.doc(this.db, 'persons', p.id), clean(p)); },
+  saveSeason(s) { const { events, ...rest } = s; return this.fs.setDoc(this.fs.doc(this.db, 'seasons', String(s.year)), clean(rest)); },
+  saveEvent(y, ev) { return this.fs.setDoc(this.fs.doc(this.db, 'seasons', String(y), 'events', ev.id), clean(ev)); },
+  deleteEvent(y, id) { return this.fs.deleteDoc(this.fs.doc(this.db, 'seasons', String(y), 'events', id)); },
+  async importSeed(seed) {
+    const { writeBatch, doc } = this.fs;
+    const b = writeBatch(this.db);
+    const y = String(seed.season.year);
+    seed.persons.forEach(p => b.set(doc(this.db, 'persons', p.id), p));
+    b.set(doc(this.db, 'seasons', y), seed.season);
+    seed.events.forEach(ev => b.set(doc(this.db, 'seasons', y, 'events', ev.id), ev));
+    await b.commit();
+  },
+  async restoreSeed(seed, eventIds, extraPersons, testSeasons) {
+    const { writeBatch, doc } = this.fs;
+    const y = String(seed.season.year);
+    const b = writeBatch(this.db);
+    eventIds.forEach(id => b.delete(doc(this.db, 'seasons', y, 'events', id)));
+    extraPersons.forEach(id => b.delete(doc(this.db, 'persons', id)));
+    testSeasons.forEach(s => {
+      s.eventIds.forEach(id => b.delete(doc(this.db, 'seasons', String(s.year), 'events', id)));
+      b.delete(doc(this.db, 'seasons', String(s.year)));
+    });
+    await b.commit();
+    await this.importSeed(seed);
+  }
+};
+
+async function save(fn, okMsg) {
+  try { await fn(); if (okMsg) toast(okMsg); return true; }
+  catch (e) { console.error(e); toast('Não foi possível salvar' + (e.code === 'permission-denied' ? ': sem permissão.' : '.')); return false; }
+}
+
+const activeSeason = () => Object.values(S.seasons).filter(s => s.status === 'ativa').sort((a, b) => b.year - a.year)[0];
+
+function uniqueEventId(date) {
+  let id = date, i = 2;
+  while (season().events?.[id]) id = `${date}-${i++}`;
+  return id;
+}
+
+function uniquePersonId(name) {
+  const base = slug(name) || 'pessoa';
+  let id = base, i = 2;
+  while (S.persons[id]) id = `${base}-${i++}`;
+  return id;
+}
+
+async function syncMembership(pid, type) {
+  const act = activeSeason(); if (!act) return true;
+  const members = new Set(act.members || []);
+  const had = members.has(pid);
+  if (type === 'membro') members.add(pid); else members.delete(pid);
+  if (had === members.has(pid)) return true;
+  return save(() => S.store.saveSeason({ ...act, members: [...members] }));
+}
+
+/* ---------- navegação e renderização ---------- */
+const route = () => (location.hash.replace(/^#\/?/, '') || 'ranking').split('/').map(decodeURIComponent);
+const FORM_VIEWS = ['novo-encontro', 'admin'];
+const isFormRoute = ([v, , sub]) => FORM_VIEWS.includes(v) || (v === 'encontro' && ['editar', 'pontos', 'sumula'].includes(sub));
+
+function go(hash) {
+  S.formHash = null;
+  if (location.hash === hash) render(); else location.hash = hash;
+}
+
+function defaultYear() {
+  const act = activeSeason();
+  if (act) return act.year;
+  const ys = Object.keys(S.seasons).map(Number);
+  return ys.length ? Math.max(...ys) : null;
+}
+
+function render() {
+  if (!S.authChecked) { app.innerHTML = '<div class="loading">Carregando…</div>'; return; }
+  if (!S.role) { app.innerHTML = loginView(); return; }
+  if (!S.ready) { app.innerHTML = '<div class="loading">Carregando dados…</div>'; return; }
+  if (!S.year || !S.seasons[S.year]) S.year = defaultYear();
+  const r = route();
+  const [v, id, sub] = r;
+  let body;
+  if (v === 'ranking') body = rankingView();
+  else if (v === 'encontros') body = eventsView();
+  else if (v === 'novo-encontro') body = eventFormView(null);
+  else if (v === 'encontro' && sub === 'editar') body = eventFormView(id);
+  else if (v === 'encontro' && sub === 'pontos') body = pointsFormView(id);
+  else if (v === 'encontro' && sub === 'sumula') body = sumulaFormView(id);
+  else if (v === 'encontro') body = eventView(id);
+  else if (v === 'jogadora') body = playerView(id);
+  else if (v === 'admin') body = adminView();
+  else if (v === 'restaurar') body = restoreView();
+  else body = notFound('Página não encontrada.');
+  app.innerHTML = header() + `<main>${body}</main>`;
+  S.formHash = isFormRoute(r) ? location.hash : null;
+}
+
+function dataChanged() {
+  if (S.formHash && S.formHash === location.hash && app.querySelector('form[data-form]')) return;
+  render();
+}
+
+window.addEventListener('hashchange', () => { S.formHash = null; render(); window.scrollTo(0, 0); });
+
+/* ---------- ações ---------- */
+const actions = {
+  mode(el) { S.mode = el.dataset.mode; localStorage.setItem('bv-mode', S.mode); render(); },
+  logout() { S.store.logout(); },
+  'demo-login'(el) { S.store.login(el.dataset.role); },
+  print(el) { printSheet(el.dataset.kind, el.dataset.id); },
+  image(el) { saveImage(el.dataset.kind, el.dataset.id); },
+  async 'delete-event'(el) {
+    const ev = season().events[el.dataset.id];
+    if (!confirm(`Excluir o encontro de ${fmtDate(ev.date)} e todos os pontos dele?`)) return;
+    if (await save(() => S.store.deleteEvent(S.year, ev.id), 'Encontro excluído')) go('#/encontros');
+  },
+  async 'delete-sumula'(el) {
+    const ev = structuredClone(season().events[el.dataset.ev]);
+    const su = (ev.sumulas || []).find(s => s.id === el.dataset.id);
+    if (!su || !confirm(`Excluir a súmula do ${su.game}º jogo? Os pontos dessas 4 jogadoras nesse jogo serão apagados.`)) return;
+    ev.sumulas = ev.sumulas.filter(s => s.id !== su.id);
+    const clear = (pids, pts) => pids.forEach(pid => { const a = ev.scores[pid]; if (a && a[su.game - 1] === pts) { a[su.game - 1] = null; if (!a.some(num)) delete ev.scores[pid]; } });
+    clear(su.pairA, su.pointsA); clear(su.pairB, su.pointsB);
+    ev.status = eventPlayed(ev) ? 'realizado' : 'agendado';
+    if (await save(() => S.store.saveEvent(S.year, ev), 'Súmula excluída')) render();
+  },
+  async 'save-person'(el) {
+    const row = el.closest('.person-row');
+    const name = row.querySelector('[name=name]').value.trim();
+    const type = row.querySelector('[name=type]').value;
+    if (!name) return toast('Informe o nome.');
+    const p = { ...S.persons[el.dataset.id], name, type };
+    if (await save(() => S.store.savePerson(p)) && await syncMembership(p.id, type)) { toast('Pessoa salva'); render(); }
+  },
+  async 'season-status'(el) {
+    const s = S.seasons[el.dataset.year];
+    const status = s.status === 'ativa' ? 'arquivada' : 'ativa';
+    if (status === 'arquivada' && !confirm(`Arquivar ${s.year}? A temporada fica só para consulta.`)) return;
+    if (await save(() => S.store.saveSeason({ ...s, status }), status === 'ativa' ? 'Temporada reaberta' : 'Temporada arquivada')) render();
+  },
+  backup(el) {
+    const y = el.dataset.year; const s = S.seasons[y];
+    const ids = new Set([...(s.members || []), ...Object.values(s.events || {}).flatMap(e => Object.keys(e.scores || {}))]);
+    const data = { version: 1, exportedAt: new Date().toISOString(), persons: [...ids].map(id => S.persons[id]).filter(Boolean), season: { ...s, events: undefined }, events: Object.values(s.events || {}) };
+    const url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 1)], { type: 'application/json' }));
+    const a = document.createElement('a'); a.href = url; a.download = `baravilhosas-backup-${y}.json`; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 3000);
+  },
+  async 'import-seed'() {
+    if (S.seasons[2026] && !confirm('Já existe uma temporada 2026. Substituir pelos dados da planilha?')) return;
+    let seed;
+    try { seed = await fetchSeed(); } catch { return toast('Não foi possível ler o arquivo de dados.'); }
+    if (await save(() => S.store.importSeed(seed), 'Histórico de 2026 importado')) { S.year = 2026; go('#/ranking'); }
+  },
+  async 'restore-seed'() {
+    if (!MODO_TESTE) return;
+    if (!confirm('Apagar tudo o que foi lançado em 2026 depois da importação e voltar aos dados reais até outubro? Esta ação não pode ser desfeita.')) return;
+    let seed;
+    try { seed = await fetchSeed(); } catch { return toast('Não foi possível ler o arquivo de dados.'); }
+    const y = seed.season.year;
+    const testSeasons = Object.values(S.seasons).filter(s => s.year > y && new Date().getFullYear() <= y)
+      .map(s => ({ year: s.year, eventIds: Object.keys(s.events || {}) }));
+    const removed = new Set([y, ...testSeasons.map(s => s.year)]);
+    const eventIds = Object.keys(S.seasons[y]?.events || {});
+    const seedPersons = new Set(seed.persons.map(p => p.id));
+    const usedElsewhere = new Set(Object.values(S.seasons).filter(s => !removed.has(s.year))
+      .flatMap(s => [...(s.members || []), ...Object.values(s.events || {}).flatMap(e => Object.keys(e.scores || {}))]));
+    const extraPersons = Object.keys(S.persons).filter(id => !seedPersons.has(id) && !usedElsewhere.has(id));
+    if (await save(() => S.store.restoreSeed(seed, eventIds, extraPersons, testSeasons), 'Dados reais de 2026 restaurados')) { S.year = y; go('#/ranking'); }
+  }
+};
+
+/* ---------- formulários ---------- */
+function readSumula(f) {
+  const vals = k => [0, 1, 2, 3].map(i => { const v = f[k + i].value.trim(); return v === '' ? null : parseInt(v, 10); });
+  const ra = vals('ra'), rb = vals('rb');
+  const sum = a => a.reduce((s, v) => s + (num(v) ? v : 0), 0);
+  const ta = sum(ra), tb = sum(rb), diff = Math.abs(ta - tb);
+  const row = pointsFor(diff, season().scoreTable || DEFAULT_TABLE);
+  const aWins = ta >= tb;
+  return {
+    game: +f.game.value, table: f.table.value.trim(),
+    a: [f.a1.value, f.a2.value], b: [f.b1.value, f.b2.value],
+    ra, rb, ta, tb, diff, ptsA: aWins ? row.win : row.lose, ptsB: aWins ? row.lose : row.win,
+    filled: ra.some(num) || rb.some(num)
+  };
+}
+
+function updateSumula(f) {
+  const r = readSumula(f);
+  f.querySelector('#ta').textContent = r.ta;
+  f.querySelector('#tb').textContent = r.tb;
+  const out = f.querySelector('#sumula-result');
+  if (!r.filled) { out.innerHTML = '<p>Preencha as rodadas para ver o resultado.</p>'; return; }
+  const who = r.ta === r.tb ? 'Empate' : r.ta > r.tb ? 'Dupla A vence' : 'Dupla B vence';
+  out.innerHTML = `<p><strong>Diferença: ${r.diff}</strong> · ${who}</p><p>Dupla A: <strong>${r.ptsA}</strong> pontos para cada · Dupla B: <strong>${r.ptsB}</strong> pontos para cada</p>`;
+}
+
+const forms = {
+  async login(f) {
+    const btn = f.querySelector('button'); const err = f.querySelector('#login-err');
+    btn.disabled = true; err.textContent = '';
+    try { await S.store.login(f.pw.value); }
+    catch (e) { err.textContent = e.code === 'auth/too-many-requests' ? 'Muitas tentativas. Aguarde alguns minutos.' : 'Senha incorreta.'; btn.disabled = false; }
+  },
+  async event(f) {
+    const y = S.year, id = f.dataset.id;
+    const date = f.date.value;
+    if (!date) return toast('Informe a data.');
+    const checked = [...f.querySelectorAll('input[name=guest]:checked')].map(i => i.value);
+    for (const n of f.newGuests.value.split(',').map(x => x.trim()).filter(Boolean)) {
+      let p = Object.values(S.persons).find(x => x.name.toLowerCase() === n.toLowerCase());
+      if (!p) {
+        p = { id: uniquePersonId(n), name: n, type: 'convidada' };
+        if (!await save(() => S.store.savePerson(p))) return;
+        S.persons[p.id] = p;
+      }
+      if (!checked.includes(p.id)) checked.push(p.id);
+    }
+    const ev = id ? structuredClone(season().events[id]) : { id: uniqueEventId(date), scores: {}, sumulas: [] };
+    ev.date = date; ev.hosts = f.hosts.value.trim(); ev.location = f.location.value.trim();
+    const scoredGuests = Object.keys(ev.scores).filter(pid => !isMember(pid) && played(ev, pid));
+    ev.guests = [...new Set([...checked, ...scoredGuests])].filter(pid => !isMember(pid));
+    ev.status = eventPlayed(ev) ? 'realizado' : 'agendado';
+    if (await save(() => S.store.saveEvent(y, ev), 'Encontro salvo')) go('#/encontro/' + encodeURIComponent(ev.id));
+  },
+  async points(f) {
+    const ev = structuredClone(season().events[f.dataset.id]);
+    const scores = {};
+    f.querySelectorAll('input.score').forEach(inp => {
+      const v = inp.value.trim(); if (v === '') return;
+      const n = parseInt(v, 10); if (!Number.isFinite(n)) return;
+      const [, pid, i] = inp.name.split(':');
+      (scores[pid] ||= [null, null, null, null])[+i] = n;
+    });
+    ev.scores = scores;
+    ev.status = eventPlayed(ev) ? 'realizado' : 'agendado';
+    if (await save(() => S.store.saveEvent(S.year, ev), 'Pontos salvos')) go('#/encontro/' + encodeURIComponent(ev.id));
+  },
+  async sumula(f) {
+    const r = readSumula(f);
+    const all = [...r.a, ...r.b];
+    if (all.some(x => !x)) return toast('Escolha as 4 jogadoras.');
+    if (new Set(all).size !== 4) return toast('Cada jogadora só pode aparecer uma vez.');
+    if (!r.filled) return toast('Preencha os pontos das rodadas.');
+    const ev = structuredClone(season().events[f.dataset.id]);
+    ev.scores ||= {};
+    const g = r.game - 1;
+    const conflicts = [...r.a.map(p => [p, r.ptsA]), ...r.b.map(p => [p, r.ptsB])].filter(([p, v]) => num(ev.scores[p]?.[g]) && ev.scores[p][g] !== v);
+    if (conflicts.length && !confirm(`${conflicts.map(([p]) => pname(p)).join(', ')} já tem pontos no ${r.game}º jogo. Substituir?`)) return;
+    const set = (p, v) => { (ev.scores[p] ||= [null, null, null, null])[g] = v; };
+    r.a.forEach(p => set(p, r.ptsA)); r.b.forEach(p => set(p, r.ptsB));
+    ev.sumulas = [...(ev.sumulas || []), {
+      id: Date.now().toString(36), game: r.game, table: r.table, pairA: r.a, pairB: r.b,
+      roundsA: r.ra, roundsB: r.rb, totalA: r.ta, totalB: r.tb, difference: r.diff, pointsA: r.ptsA, pointsB: r.ptsB
+    }];
+    ev.guests = [...new Set([...(ev.guests || []), ...all.filter(p => !isMember(p))])];
+    ev.status = 'realizado';
+    if (await save(() => S.store.saveEvent(S.year, ev), 'Súmula salva')) go('#/encontro/' + encodeURIComponent(ev.id));
+  },
+  async 'add-person'(f) {
+    const name = f.name.value.trim(); if (!name) return;
+    const p = { id: uniquePersonId(name), name, type: f.type.value };
+    if (await save(() => S.store.savePerson(p)) && await syncMembership(p.id, p.type)) { S.persons[p.id] = p; toast('Pessoa adicionada'); render(); }
+  },
+  async 'new-season'(f) {
+    const y = +f.year.value;
+    if (!y) return;
+    if (S.seasons[y]) return toast(`A temporada ${y} já existe.`);
+    if (!confirm(`Iniciar a temporada ${y}? O ranking começa do zero e as temporadas ativas serão arquivadas.`)) return;
+    const prev = activeSeason();
+    for (const s of Object.values(S.seasons).filter(s => s.status === 'ativa'))
+      if (!await save(() => S.store.saveSeason({ ...s, status: 'arquivada' }))) return;
+    const members = Object.values(S.persons).filter(p => p.type === 'membro').map(p => p.id);
+    const ns = { year: y, status: 'ativa', members, scoreTable: prev?.scoreTable || DEFAULT_TABLE };
+    if (await save(() => S.store.saveSeason(ns), `Temporada ${y} iniciada`)) {
+      S.year = y; localStorage.setItem('bv-year', y); go('#/ranking');
+    }
+  }
+};
+
+document.addEventListener('click', e => {
+  const el = e.target.closest('[data-action]');
+  if (!el) return;
+  e.preventDefault();
+  actions[el.dataset.action]?.(el);
+});
+
+document.addEventListener('submit', e => {
+  const f = e.target.closest('form[data-form]');
+  if (!f) return;
+  e.preventDefault();
+  forms[f.dataset.form]?.(f);
+});
+
+document.addEventListener('change', e => {
+  if (e.target.dataset.change === 'season') {
+    S.year = +e.target.value; localStorage.setItem('bv-year', S.year); render();
+  }
+});
+
+document.addEventListener('input', e => {
+  const f = e.target.closest('form[data-form]');
+  if (!f) return;
+  if (f.dataset.form === 'sumula') updateSumula(f);
+  if (f.dataset.form === 'points' && e.target.classList.contains('score')) {
+    const tr = e.target.closest('tr');
+    const vals = [...tr.querySelectorAll('input.score')].map(i => parseInt(i.value, 10)).filter(Number.isFinite);
+    tr.querySelector('[data-total]').textContent = vals.length ? vals.reduce((a, b) => a + b, 0) : '-';
+  }
+});
+
+/* ---------- início ---------- */
+(function suitsBackground() {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120"><g fill="#000" fill-opacity=".2" font-family="serif" font-size="26"><text x="8" y="32">♠</text><text x="68" y="32">♥</text><text x="38" y="92">♣</text><text x="98" y="92">♦</text></g></svg>`;
+  document.body.style.backgroundImage = `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+})();
+
+(async function start() {
+  S.store = S.demo ? LocalStore : FirebaseStore;
+  try { await S.store.init(); }
+  catch (e) { console.error(e); app.innerHTML = '<div class="loading">Não foi possível conectar. Verifique a internet e recarregue a página.</div>'; return; }
+  render();
+})();
+</script>
+</body>
+</html>

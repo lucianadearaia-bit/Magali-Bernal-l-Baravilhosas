@@ -1,0 +1,20 @@
+rules_version = '2';
+
+// Cole este conteúdo em Firestore Database > Regras no console do Firebase.
+// Leitura: qualquer uma das duas contas (senha de visualização ou de edição).
+// Escrita: somente a conta de edição.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+    function isEditor() {
+      return signedIn() && request.auth.token.email == 'editora@baravilhosas.app';
+    }
+
+    match /{document=**} {
+      allow read: if signedIn();
+      allow write: if isEditor();
+    }
+  }
+}
