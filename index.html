@@ -645,7 +645,7 @@ function folhaSheetHTML(ev) {
   const people = (ev.attendees || defaultAttendees(ev)).filter(pid => S.persons[pid]).sort((a, b) => pname(a).localeCompare(pname(b), 'pt-BR'));
   const rowH = Math.min(10, Math.max(5, 150 / (people.length + 4))).toFixed(1);
   const last = eventsOf().filter(e => eventPlayed(e) && e.date < ev.date).pop();
-  const cols = ['1ª rodada', '2ª rodada', 'Parcial', '3ª rodada', 'Total', '4ª rodada<br>(se houver)', 'Ranking<br>do dia', 'Ranking<br>acumulado'];
+  const cols = ['1ª rodada', '2ª rodada', 'Parcial', '3ª rodada', 'Total', 'Ranking<br>do dia'];
   const sumCls = i => i === 2 || i === 4 ? ' class="sum"' : '';
   const blank = cols.map((_, i) => `<td${sumCls(i)}></td>`).join('');
   const line = pid => {
