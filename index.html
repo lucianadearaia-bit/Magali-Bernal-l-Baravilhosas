@@ -159,8 +159,22 @@ summary{cursor:pointer;font-weight:700;color:var(--red-dark);min-height:32px}
 .sheet-img .badge-guest{font-size:15px;margin-left:8px}
 .sheet-img .sheet-foot{font-size:20px;margin-top:18px}
 .sheet-host{position:fixed;left:-20000px;top:0}
+.sheet-folha{page:folha}
+.sheet-folha .sheet-head{margin-bottom:8px;padding-bottom:6px}
+.sheet-folha .sheet-head img{width:64px;height:64px}
+.sheet-folha table{table-layout:fixed;font-size:13px}
+.sheet-folha th,.sheet-folha td{border:1px solid #9a9184;text-align:center;padding:2px 4px}
+.sheet-folha th{background:#f3ead3;color:#2b2420;font-size:10px;line-height:1.2}
+.sheet-folha th.c-nm{width:21%}
+.sheet-folha th.c-rg{width:11%}
+.sheet-folha td{height:var(--row,7mm)}
+.sheet-folha td.nm{text-align:left;font-weight:600;white-space:nowrap;overflow:hidden}
+.sheet-folha td.rg{font-weight:700;white-space:nowrap}
+.sheet-folha .sum{background:#faf5e8}
+.check .rk{font-size:.8rem;color:var(--muted);font-weight:500}
 #print-area{display:none}
 @page{size:A4;margin:12mm}
+@page folha{size:A4 landscape;margin:8mm}
 @media print{
   body{background:#fff!important}
   #app,#toast{display:none!important}
@@ -266,10 +280,11 @@ function rankRows(rows) {
   return rows;
 }
 
-function generalRanking(y, mode) {
+function generalRanking(y, mode, before = null) {
   const s = season(y); if (!s) return [];
   const tot = {}, cnt = {};
   for (const ev of eventsOf(y)) for (const pid of Object.keys(ev.scores || {})) {
+    if (before && ev.date >= before) continue;
     if (!played(ev, pid)) continue;
     tot[pid] = (tot[pid] || 0) + dayTotal(ev, pid);
     cnt[pid] = (cnt[pid] || 0) + 1;
@@ -402,6 +417,7 @@ function eventView(id) {
       <div class="actions">
         <a class="btn" href="#/encontro/${encodeURIComponent(ev.id)}/sumula">Nova súmula</a>
         <a class="btn secondary" href="#/encontro/${encodeURIComponent(ev.id)}/pontos">Lançar pontos direto</a>
+        <a class="btn secondary" href="#/encontro/${encodeURIComponent(ev.id)}/folha">Folha de anotações</a>
         <a class="btn secondary" href="#/encontro/${encodeURIComponent(ev.id)}/editar">Dados do encontro</a>
         <button class="btn danger" data-action="delete-event" data-id="${esc(ev.id)}">Excluir encontro</button>
       </div></section>` : ''}
@@ -483,6 +499,46 @@ function pointsFormView(id) {
         <td class="num pts" data-total>${played(ev, pid) ? dayTotal(ev, pid) : '-'}</td></tr>`).join('')}
       </tbody></table></div>
       <div class="form-actions"><a class="btn secondary" href="#/encontro/${encodeURIComponent(id)}">Cancelar</a><button class="btn" type="submit">Salvar pontos</button></div>
+    </form></section>`;
+}
+
+const defaultAttendees = ev => [...new Set([...(season().members || []), ...(ev.guests || [])])];
+const rankBefore = ev => Object.fromEntries(generalRanking(S.year, 'grupo', ev.date).map(r => [r.pid, r]));
+
+function sheetCount(sel) {
+  const ids = [...sel];
+  const m = ids.filter(pid => isMember(pid)).length, g = ids.length - m;
+  return `${m} integrante${m === 1 ? '' : 's'} e ${g} convidada${g === 1 ? '' : 's'} · ${ids.length} nome${ids.length === 1 ? '' : 's'} na folha`;
+}
+
+function sheetFormView(id) {
+  if (!canEdit()) return noAccess();
+  const ev = season().events?.[id];
+  if (!ev) return notFound('Encontro não encontrado.');
+  const sel = new Set(ev.attendees || defaultAttendees(ev));
+  const rk = rankBefore(ev);
+  const members = (season().members || []).slice().sort((a, b) => pname(a).localeCompare(pname(b), 'pt-BR'));
+  const guests = Object.values(S.persons).filter(p => !isMember(p.id)).sort(byName);
+  const box = (pid, extra = '') => `<label class="check"><input type="checkbox" name="who" value="${esc(pid)}" ${sel.has(pid) ? 'checked' : ''}>${isMember(pid) ? ICON_MEMBER : ICON_GUEST} ${esc(pname(pid))}${extra}</label>`;
+  const back = `#/encontro/${encodeURIComponent(id)}`;
+  return `<section class="card" data-suit="♣"><a class="back" href="${back}">← Voltar</a>
+    <h1>Folha de anotações</h1>
+    <p class="sub">${longDate(ev.date)}${ev.hosts ? ' · Anfitriãs: ' + esc(ev.hosts) : ''}</p>
+    <p class="hint">Marque quem vai jogar neste encontro. A folha sai em A4 deitado, com os nomes em ordem alfabética, o ranking geral de cada integrante e as colunas em branco para anotar.</p>
+    <form data-form="sheet" data-id="${esc(id)}">
+      <fieldset><legend>Integrantes do grupo</legend>
+        <div class="actions"><button type="button" class="btn secondary sm" data-action="check-all" data-on="1">Marcar todas</button><button type="button" class="btn secondary sm" data-action="check-all" data-on="0">Desmarcar todas</button></div>
+        <div class="checks">${members.map(pid => box(pid, rk[pid] ? ` <span class="rk">${rk[pid].pos}º</span>` : '')).join('')}</div>
+      </fieldset>
+      <fieldset><legend>Convidadas</legend>
+        ${guests.length ? `<div class="checks">${guests.map(g => box(g.id, ' <span class="badge-guest">Convidada</span>')).join('')}</div>` : '<p class="hint">Nenhuma convidada cadastrada ainda.</p>'}
+        <label for="sh-new">Novas convidadas <span class="muted">(separe os nomes por vírgula)</span></label>
+        <input id="sh-new" name="newGuests" placeholder="Ex.: Kelly, Monica">
+      </fieldset>
+      <p class="hint" id="sheet-count" aria-live="polite">${sheetCount(sel)}</p>
+      <div class="form-actions"><a class="btn secondary" href="${back}">Cancelar</a>
+        <button class="btn secondary" type="submit" value="save">Salvar lista</button>
+        <button class="btn" type="submit" value="print">Salvar e imprimir</button></div>
     </form></section>`;
 }
 
@@ -584,6 +640,25 @@ function sheetHTML(kind, id, forImage) {
     <table>${table}</table><p class="sheet-foot">${modeLabel} · gerado em ${today()}</p></div>`;
 }
 
+function folhaSheetHTML(ev) {
+  const rk = rankBefore(ev);
+  const people = (ev.attendees || defaultAttendees(ev)).filter(pid => S.persons[pid]).sort((a, b) => pname(a).localeCompare(pname(b), 'pt-BR'));
+  const rowH = Math.min(10, Math.max(5, 150 / (people.length + 4))).toFixed(1);
+  const last = eventsOf().filter(e => eventPlayed(e) && e.date < ev.date).pop();
+  const cols = ['1ª rodada', '2ª rodada', 'Parcial', '3ª rodada', 'Total', '4ª rodada<br>(se houver)', 'Ranking<br>do dia', 'Ranking<br>acumulado'];
+  const sumCls = i => i === 2 || i === 4 ? ' class="sum"' : '';
+  const blank = cols.map((_, i) => `<td${sumCls(i)}></td>`).join('');
+  const line = pid => {
+    const m = isMember(pid), r = m ? rk[pid] : null;
+    return `<tr><td class="nm">${m ? ICON_MEMBER : ICON_GUEST}${esc(pname(pid))}${m ? '' : '<span class="badge-guest">Convidada</span>'}</td><td class="rg">${r ? `${r.pos}º · ${r.pts} pts` : '-'}</td>${blank}</tr>`;
+  };
+  const sub = [ev.hosts ? 'Anfitriãs: ' + esc(ev.hosts) : '', ev.location ? esc(ev.location) : '', last ? `Ranking geral até ${fmtDate(last.date)}` : 'Primeiro encontro do ano'].filter(Boolean).join(' · ');
+  return `<div class="sheet sheet-folha" style="--row:${rowH}mm"><div class="sheet-head"><img src="${LOGO}" alt=""><div><h1>Encontro de ${fmtDate(ev.date)}</h1><p>${sub}</p></div></div>
+    <table><thead><tr><th class="c-nm">Jogadora</th><th class="c-rg">Ranking<br>geral</th>${cols.map((c, i) => `<th${sumCls(i)}>${c}</th>`).join('')}</tr></thead>
+    <tbody>${people.map(line).join('')}${`<tr><td class="nm"></td><td class="rg"></td>${blank}</tr>`.repeat(3)}</tbody></table>
+    <p class="sheet-foot">Ranking geral: posição e pontos no grupo · gerado em ${today()}</p></div>`;
+}
+
 const imagesLoaded = el => Promise.all([...el.querySelectorAll('img')].map(i => i.complete ? null : new Promise(r => { i.onload = i.onerror = r; })));
 
 function loadScript(src) {
@@ -595,9 +670,9 @@ function loadScript(src) {
   });
 }
 
-async function printSheet(kind, id) {
+async function printSheet(kind, id, ev = null) {
   const pa = document.getElementById('print-area');
-  pa.innerHTML = sheetHTML(kind, id, false);
+  pa.innerHTML = kind === 'folha' ? folhaSheetHTML(ev || season().events[id]) : sheetHTML(kind, id, false);
   await imagesLoaded(pa);
   window.print();
 }
@@ -776,7 +851,7 @@ async function syncMembership(pid, type) {
 /* ---------- navegação e renderização ---------- */
 const route = () => (location.hash.replace(/^#\/?/, '') || 'ranking').split('/').map(decodeURIComponent);
 const FORM_VIEWS = ['novo-encontro', 'admin'];
-const isFormRoute = ([v, , sub]) => FORM_VIEWS.includes(v) || (v === 'encontro' && ['editar', 'pontos', 'sumula'].includes(sub));
+const isFormRoute = ([v, , sub]) => FORM_VIEWS.includes(v) || (v === 'encontro' && ['editar', 'pontos', 'sumula', 'folha'].includes(sub));
 
 function go(hash) {
   S.formHash = null;
@@ -804,6 +879,7 @@ function render() {
   else if (v === 'encontro' && sub === 'editar') body = eventFormView(id);
   else if (v === 'encontro' && sub === 'pontos') body = pointsFormView(id);
   else if (v === 'encontro' && sub === 'sumula') body = sumulaFormView(id);
+  else if (v === 'encontro' && sub === 'folha') body = sheetFormView(id);
   else if (v === 'encontro') body = eventView(id);
   else if (v === 'jogadora') body = playerView(id);
   else if (v === 'admin') body = adminView();
@@ -827,6 +903,10 @@ const actions = {
   'demo-login'(el) { S.store.login(el.dataset.role); },
   print(el) { printSheet(el.dataset.kind, el.dataset.id); },
   image(el) { saveImage(el.dataset.kind, el.dataset.id); },
+  'check-all'(el) {
+    el.closest('fieldset').querySelectorAll('input[name=who]').forEach(i => { i.checked = el.dataset.on === '1'; });
+    updateSheetCount(el.closest('form'));
+  },
   async 'delete-event'(el) {
     const ev = season().events[el.dataset.id];
     if (!confirm(`Excluir o encontro de ${fmtDate(ev.date)} e todos os pontos dele?`)) return;
@@ -914,6 +994,24 @@ function updateSumula(f) {
   out.innerHTML = `<p><strong>Diferença: ${r.diff}</strong> · ${who}</p><p>Dupla A: <strong>${r.ptsA}</strong> pontos para cada · Dupla B: <strong>${r.ptsB}</strong> pontos para cada</p>`;
 }
 
+function updateSheetCount(f) {
+  f.querySelector('#sheet-count').textContent = sheetCount(new Set([...f.querySelectorAll('input[name=who]:checked')].map(i => i.value)));
+}
+
+async function ensureGuests(text) {
+  const ids = [];
+  for (const n of text.split(',').map(x => x.trim()).filter(Boolean)) {
+    let p = Object.values(S.persons).find(x => x.name.toLowerCase() === n.toLowerCase());
+    if (!p) {
+      p = { id: uniquePersonId(n), name: n, type: 'convidada' };
+      if (!await save(() => S.store.savePerson(p))) return null;
+      S.persons[p.id] = p;
+    }
+    ids.push(p.id);
+  }
+  return ids;
+}
+
 const forms = {
   async login(f) {
     const btn = f.querySelector('button'); const err = f.querySelector('#login-err');
@@ -926,15 +1024,9 @@ const forms = {
     const date = f.date.value;
     if (!date) return toast('Informe a data.');
     const checked = [...f.querySelectorAll('input[name=guest]:checked')].map(i => i.value);
-    for (const n of f.newGuests.value.split(',').map(x => x.trim()).filter(Boolean)) {
-      let p = Object.values(S.persons).find(x => x.name.toLowerCase() === n.toLowerCase());
-      if (!p) {
-        p = { id: uniquePersonId(n), name: n, type: 'convidada' };
-        if (!await save(() => S.store.savePerson(p))) return;
-        S.persons[p.id] = p;
-      }
-      if (!checked.includes(p.id)) checked.push(p.id);
-    }
+    const added = await ensureGuests(f.newGuests.value);
+    if (!added) return;
+    added.forEach(pid => { if (!checked.includes(pid)) checked.push(pid); });
     const ev = id ? structuredClone(season().events[id]) : { id: uniqueEventId(date), scores: {}, sumulas: [] };
     ev.date = date; ev.hosts = f.hosts.value.trim(); ev.location = f.location.value.trim();
     const scoredGuests = Object.keys(ev.scores).filter(pid => !isMember(pid) && played(ev, pid));
@@ -976,6 +1068,19 @@ const forms = {
     ev.status = 'realizado';
     if (await save(() => S.store.saveEvent(S.year, ev), 'Súmula salva')) go('#/encontro/' + encodeURIComponent(ev.id));
   },
+  async sheet(f, btn) {
+    const added = await ensureGuests(f.newGuests.value);
+    if (!added) return;
+    const who = [...new Set([...[...f.querySelectorAll('input[name=who]:checked')].map(i => i.value), ...added])];
+    if (!who.length) return toast('Marque pelo menos uma participante.');
+    const ev = structuredClone(season().events[f.dataset.id]);
+    const scoredGuests = Object.keys(ev.scores || {}).filter(pid => !isMember(pid) && played(ev, pid));
+    ev.attendees = who;
+    ev.guests = [...new Set([...who.filter(pid => !isMember(pid)), ...scoredGuests])];
+    if (!await save(() => S.store.saveEvent(S.year, ev), 'Lista salva')) return;
+    if (btn?.value === 'print') await printSheet('folha', ev.id, ev);
+    go('#/encontro/' + encodeURIComponent(ev.id));
+  },
   async 'add-person'(f) {
     const name = f.name.value.trim(); if (!name) return;
     const p = { id: uniquePersonId(name), name, type: f.type.value };
@@ -1008,7 +1113,7 @@ document.addEventListener('submit', e => {
   const f = e.target.closest('form[data-form]');
   if (!f) return;
   e.preventDefault();
-  forms[f.dataset.form]?.(f);
+  forms[f.dataset.form]?.(f, e.submitter);
 });
 
 document.addEventListener('change', e => {
@@ -1021,6 +1126,7 @@ document.addEventListener('input', e => {
   const f = e.target.closest('form[data-form]');
   if (!f) return;
   if (f.dataset.form === 'sumula') updateSumula(f);
+  if (f.dataset.form === 'sheet' && e.target.name === 'who') updateSheetCount(f);
   if (f.dataset.form === 'points' && e.target.classList.contains('score')) {
     const tr = e.target.closest('tr');
     const vals = [...tr.querySelectorAll('input.score')].map(i => parseInt(i.value, 10)).filter(Number.isFinite);

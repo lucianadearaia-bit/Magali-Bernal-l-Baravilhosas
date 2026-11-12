@@ -127,6 +127,7 @@ Cada jogo é disputado entre duas duplas. Ao fim das rodadas, calcula-se a difer
 | RF12 | Cadastrar e editar integrantes e convidadas | Editora |
 | RF13 | Iniciar novo ano e arquivar o anterior | Editora |
 | RF14 | Consultar temporadas arquivadas | Todas |
+| RF15 | Montar a lista de participantes do encontro (integrantes e convidadas) e imprimir a folha de anotações em branco | Editora |
 
 ## 7. Requisitos não funcionais
 
@@ -273,7 +274,11 @@ O erro mudava posições: pela aba de outubro, Renata aparecia em 3º e Adriana 
 6. **Edição** (só com a senha "a"): criar e editar encontro, lançar pela súmula, lançar direto e cadastrar pessoas.
 7. **Temporadas** (só com a senha "a"): iniciar novo ano.
 
-### 11.4 Impressão e imagem
+### 11.4 Folha de anotações do encontro
+- Na página do encontro, a editora abre "Folha de anotações", marca as integrantes que vão jogar e as convidadas (pode cadastrar novas ali mesmo). A lista fica salva no encontro (`attendees[]`).
+- A folha sai em A4 deitado, com os nomes em ordem alfabética e as colunas: Jogadora, Ranking geral (posição e pontos no grupo, considerando só os encontros anteriores), 1ª rodada, 2ª rodada, Parcial, 3ª rodada, Total, 4ª rodada (se houver), Ranking do dia e Ranking acumulado. Fora o nome e o ranking geral, tudo vem em branco para anotação à mão, com 3 linhas vazias no fim.
+
+### 11.5 Impressão e imagem
 - A folha A4 traz o logo, o título ("Ranking do dia - 22/10/2026" ou "Ranking geral 2026"), a tabela em fonte grande e a data em que foi gerada. Os elementos de navegação ficam de fora.
 - A imagem PNG tem o mesmo conteúdo, em formato vertical pensado para o WhatsApp.
 
